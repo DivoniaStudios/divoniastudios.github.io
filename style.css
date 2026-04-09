@@ -6,9 +6,8 @@
 }
 
 body {
-  background: #0f0f1a;
-  color: #ffffff;
-  line-height: 1.6;
+  background: #ec1f27;
+  color: white;
 }
 
 header {
@@ -17,63 +16,34 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  text-align: center;
 }
 
+/* Ana başlık */
 header h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-
-header p {
-  margin-bottom: 20px;
-  opacity: 0.8;
-}
-
-.btn {
-  padding: 12px 24px;
-  background: #ff4c60;
+  font-size: 5rem;
   color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #ff2e45;
-}
-
-section {
-  padding: 60px 20px;
   text-align: center;
+  letter-spacing: 2px;
+
+  /* ince siyah outline efekti */
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
 }
 
-.about p {
-  max-width: 600px;
-  margin: auto;
+/* slogan */
+.tagline {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  opacity: 0.9;
 }
 
-.projects {
-  background: #151528;
-}
-
-.card {
-  background: #1f1f3a;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 300px;
-  border-radius: 10px;
-}
-
-.contact {
-  background: #101020;
-}
-
-footer {
-  padding: 20px;
-  text-align: center;
-  background: #0a0a14;
-  font-size: 0.9rem;
-  opacity: 0.7;
+/* coming soon */
+.coming {
+  margin-top: 40px;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  opacity: 0.8;
 }
