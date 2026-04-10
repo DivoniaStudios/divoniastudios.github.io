@@ -21,19 +21,18 @@ header {
 
 /* Ana başlık */
 header h1 {
-  font-size: 4rem;
+  font-size: 3rem; /* küçülttük */
   color: white;
   text-align: center;
   line-height: 1.4;
+  letter-spacing: 1px; /* harf arası azaltıldı */
 
-  /* outline */
   text-shadow:
     -2px -2px 0 #000,
      2px -2px 0 #000,
     -2px  2px 0 #000,
      2px  2px 0 #000;
 }
-
 /* slogan */
 .tagline {
   margin-top: 25px;
