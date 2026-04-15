@@ -4,15 +4,17 @@
   box-sizing: border-box;
 }
 
-/* Arka plan + pixel font */
 body {
-  background: url('background.png') no-repeat center center fixed;
+  background-image: url("background.jpg"); /* BURASI ÖNEMLİ */
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: white;
   font-family: 'Press Start 2P', cursive;
 }
 
-/* Ortalama */
 header {
   height: 100vh;
   display: flex;
@@ -28,20 +30,18 @@ header {
   height: auto;
 }
 
-/* slogan */
+/* slogan (BÜYÜTÜLDÜ + GÖLGE KALDIRILDI) */
 .tagline {
   margin-top: 25px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: center;
   color: rgb(236, 31, 39);
-  text-shadow: 1px 1px 0 #000;
 }
 
-/* coming soon */
+/* coming soon (BÜYÜTÜLDÜ + GÖLGE KALDIRILDI) */
 .coming {
   margin-top: 40px;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   letter-spacing: 2px;
   color: rgb(236, 31, 39);
-  text-shadow: 1px 1px 0 #000;
 }
