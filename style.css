@@ -6,23 +6,10 @@
 
 /* Arka plan + pixel font */
 body {
-  background: url('background.jpg') no-repeat center center fixed;
+  background: url('background.png') no-repeat center center fixed;
   background-size: cover;
   color: white;
   font-family: 'Press Start 2P', cursive;
-  position: relative;
-}
-
-/* Karartma overlay */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  z-index: -1;
 }
 
 /* Ortalama */
@@ -39,8 +26,6 @@ header {
   width: 320px;
   max-width: 80%;
   height: auto;
-  //glow
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
 }
 
 /* slogan */
@@ -48,7 +33,8 @@ header {
   margin-top: 25px;
   font-size: 1rem;
   text-align: center;
-  opacity: 0.9;
+  color: rgb(236, 31, 39);
+  text-shadow: 1px 1px 0 #000;
 }
 
 /* coming soon */
@@ -56,5 +42,6 @@ header {
   margin-top: 40px;
   font-size: 0.9rem;
   letter-spacing: 2px;
-  opacity: 0.8;
+  color: rgb(236, 31, 39);
+  text-shadow: 1px 1px 0 #000;
 }
