@@ -5,7 +5,7 @@
 }
 
 body {
-  background-image: url("background.jpg"); /* BURASI ÖNEMLİ */
+  background-image: url("background.jpg"); /* DÜZELTİLDİ */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,18 +30,23 @@ header {
   height: auto;
 }
 
-/* slogan (BÜYÜTÜLDÜ + GÖLGE KALDIRILDI) */
+/* slogan */
 .tagline {
   margin-top: 25px;
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* büyütüldü */
   text-align: center;
   color: rgb(236, 31, 39);
+
+  letter-spacing: 1px; /* harfler yakınlaştırıldı */
+  font-weight: bold;
 }
 
-/* coming soon (BÜYÜTÜLDÜ + GÖLGE KALDIRILDI) */
+/* coming soon */
 .coming {
   margin-top: 40px;
-  font-size: 1.1rem;
-  letter-spacing: 2px;
+  font-size: 1.3rem; /* büyütüldü */
+  letter-spacing: 1px; /* harfler yakınlaştırıldı */
   color: rgb(236, 31, 39);
+
+  font-weight: bold;
 }
