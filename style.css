@@ -33,20 +33,18 @@ header {
 /* slogan */
 .tagline {
   margin-top: 25px;
-  font-size: 1.4rem; /* büyütüldü */
+  font-size: 1.2rem; /* büyütüldü */
   text-align: center;
   color: rgb(236, 31, 39);
-
-  letter-spacing: 1px; /* harfler yakınlaştırıldı */
+  letter-spacing: 0px; /* harfler yakınlaştırıldı */
   font-weight: bold;
 }
 
 /* coming soon */
 .coming {
   margin-top: 40px;
-  font-size: 1.3rem; /* büyütüldü */
-  letter-spacing: 1px; /* harfler yakınlaştırıldı */
+  font-size: 1.2rem; /* büyütüldü */
+  letter-spacing: 0px; /* harfler yakınlaştırıldı */
   color: rgb(236, 31, 39);
-
   font-weight: bold;
 }
