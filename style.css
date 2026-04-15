@@ -34,19 +34,13 @@ header {
   align-items: center;
 }
 
-/* Ana başlık */
-header h1 {
-  font-size: 3rem;
-  color: white;
-  text-align: center;
-  line-height: 1.4;
-  letter-spacing: 1px;
-
-  text-shadow:
-    -2px -2px 0 #000,
-     2px -2px 0 #000,
-    -2px  2px 0 #000,
-     2px  2px 0 #000;
+/* Logo */
+.logo {
+  width: 320px;
+  max-width: 80%;
+  height: auto;
+  //glow
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
 }
 
 /* slogan */
