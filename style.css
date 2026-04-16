@@ -74,16 +74,52 @@ section {
   gap: 30px;
 }
 
-/* Kart */
-.card {
+/* GRID */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* IMAGE */
+.project-img {
   width: 100%;
-  max-width: 500px;
-  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
 
-  background: rgba(255,255,255,0.85);
+/* CARD UPGRADE */
+.card {
+  background: rgba(255,255,255,0.9);
   border-radius: 12px;
+  padding: 20px;
+  transition: 0.3s;
+}
 
-  transition: all 0.25s ease;
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+/* LINKS */
+.links {
+  margin-top: 10px;
+}
+
+.links a {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background: rgb(236, 31, 39);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.7rem;
+}
+
+.links a:hover {
+  transform: scale(1.1);
 }
 
 /* Hover efekti */
@@ -104,7 +140,7 @@ section {
   margin-bottom: 15px;
 }
 
-/* 🔥 LINK BUTON STİLİ */
+/*  LINK BUTON STİLİ */
 .card a {
   display: inline-block;
   margin: 8px;
