@@ -80,7 +80,7 @@ section {
 
 /* PROJECTS CARD */
 .card {
-  background: white; /* değişti */
+  background: red; /* değişti */
   border-radius: 12px;
   padding: 20px;
   transition: 0.3s;
