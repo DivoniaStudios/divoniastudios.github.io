@@ -85,6 +85,7 @@ section {
   padding: 20px;
   transition: 0.3s;
   color: black; /* yazılar siyah */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .card:hover {
