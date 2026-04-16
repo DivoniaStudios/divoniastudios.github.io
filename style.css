@@ -66,7 +66,7 @@ section {
 
 /* PROJECTS BAŞLIK FIX */
 .projects h2 {
-  margin-bottom: 60px; /* aşağı itildi */
+  margin-bottom: 30px; /* 60 */
 }
 
 /* PROJECTS GRID */
@@ -80,7 +80,7 @@ section {
 
 /* PROJECTS CARD */
 .card {
-  background: red; /* değişti */
+  background: rgba(255,255,255,0.9);
   border-radius: 12px;
   padding: 20px;
   transition: 0.3s;
