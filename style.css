@@ -9,7 +9,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  color: white;
+  color: black; /* artık siyah */
   font-family: 'Press Start 2P', cursive;
 }
 
@@ -22,11 +22,21 @@ body {
   align-items: center;
 }
 
+/* Logo */
 .logo {
   width: 300px;
   max-width: 80%;
 }
 
+/* Başlıklar */
+h2 {
+  margin-bottom: 40px;
+  font-size: 1.6rem;
+  color: rgb(236, 31, 39);
+  font-weight: bold;
+}
+
+/* Slogan */
 .tagline {
   margin-top: 25px;
   font-size: 1.4rem;
@@ -36,54 +46,83 @@ body {
   letter-spacing: 1px;
 }
 
+/* Alt yazı */
 .sub {
   margin-top: 20px;
   font-size: 0.9rem;
-  opacity: 0.8;
+  color: black;
 }
 
 /* SECTIONS */
 section {
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
-}
-
-h2 {
-  margin-bottom: 30px;
-  font-size: 1.5rem;
-  color: rgb(236, 31, 39);
 }
 
 /* ABOUT */
 .about p {
   max-width: 700px;
   margin: auto;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-/* PROJECTS */
+/* 🔥 PROJECTS (YENİ TASARIM) */
 .projects {
-  background: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
+/* Kart */
 .card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 400px;
-  border-radius: 10px;
-  transition: 0.3s;
+  width: 100%;
+  max-width: 500px;
+  padding: 25px;
+
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
+
+  transition: all 0.25s ease;
 }
 
+/* Hover efekti */
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px) scale(1.02);
 }
 
+/* Proje başlığı */
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Açıklama */
+.card p {
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+}
+
+/* 🔥 LINK BUTON STİLİ */
 .card a {
   display: inline-block;
-  margin-top: 10px;
-  color: rgb(236, 31, 39);
+  margin: 8px;
+  padding: 10px 14px;
+
+  background: rgb(236, 31, 39);
+  color: white;
+
   text-decoration: none;
+  font-size: 0.7rem;
+
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+/* Hover */
+.card a:hover {
+  transform: scale(1.08);
 }
 
 /* SERVICES */
@@ -92,12 +131,14 @@ h2 {
 }
 
 .services li {
-  margin: 10px 0;
+  margin: 12px 0;
+  font-size: 0.9rem;
 }
 
 /* CONTACT */
 .contact p {
   margin-top: 20px;
+  font-size: 0.9rem;
 }
 
 /* FOOTER */
@@ -106,4 +147,5 @@ footer {
   text-align: center;
   font-size: 0.7rem;
   opacity: 0.7;
+  color: black;
 }
