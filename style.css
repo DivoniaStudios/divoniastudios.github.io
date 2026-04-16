@@ -11,7 +11,7 @@ body {
   background-position: center;
   background-attachment: fixed;
   color: black;
-  font-family: 'Inter', sans-serif; /* body font */
+  font-family: 'Inter', sans-serif;
 }
 
 /* HERO */
@@ -31,17 +31,17 @@ body {
 
 /* BAŞLIKLAR */
 h1, h2, h3 {
-  font-family: 'Orbitron', sans-serif; /* başlık font */
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
 }
 
-/* TAGLINE */
+/* TAGLINE (PIXEL GERİ GELDİ) */
 .tagline {
   margin-top: 25px;
-  font-size: 1.4rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.8rem; /* büyütüldü */
   color: rgb(236, 31, 39);
   text-align: center;
-  letter-spacing: 1px;
 }
 
 /* ALT YAZI */
@@ -63,7 +63,7 @@ section {
   line-height: 1.8;
 }
 
-/* PROJECTS */
+/* PROJECTS GRID */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -72,12 +72,14 @@ section {
   margin: auto;
 }
 
-/* CARD */
+/* PROJECT CARD (YENİ STYLE) */
 .card {
-  background: rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.5); /* beyaz kaldırıldı */
+  backdrop-filter: blur(6px);
   border-radius: 12px;
   padding: 20px;
   transition: 0.3s;
+  color: white;
 }
 
 .card:hover {
@@ -112,13 +114,30 @@ section {
   transform: scale(1.1);
 }
 
-/* SERVICES */
-.services ul {
-  list-style: none;
+/* SERVICES (REDESIGN) */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
 }
 
-.services li {
-  margin: 12px 0;
+.service-card {
+  background: rgba(0,0,0,0.5);
+  padding: 25px;
+  border-radius: 10px;
+  transition: 0.3s;
+  color: white;
+}
+
+.service-card:hover {
+  transform: scale(1.05);
+}
+
+.service-card h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 /* CONTACT */
