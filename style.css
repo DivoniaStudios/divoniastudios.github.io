@@ -35,13 +35,14 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
-/* TAGLINE (PIXEL GERİ GELDİ) */
+/* TAGLINE (FINAL) */
 .tagline {
   margin-top: 25px;
   font-family: 'Press Start 2P', cursive;
-  font-size: 1.8rem; /* büyütüldü */
+  font-size: 2rem; /* büyütüldü */
   color: rgb(236, 31, 39);
   text-align: center;
+  letter-spacing: 0; /* harf boşluğu kaldırıldı */
 }
 
 /* ALT YAZI */
@@ -63,6 +64,11 @@ section {
   line-height: 1.8;
 }
 
+/* PROJECTS BAŞLIK FIX */
+.projects h2 {
+  margin-bottom: 60px; /* aşağı itildi */
+}
+
 /* PROJECTS GRID */
 .projects-grid {
   display: grid;
@@ -72,14 +78,13 @@ section {
   margin: auto;
 }
 
-/* PROJECT CARD (YENİ STYLE) */
+/* PROJECTS CARD */
 .card {
-  background: rgba(0,0,0,0.5); /* beyaz kaldırıldı */
-  backdrop-filter: blur(6px);
+  background: white; /* değişti */
   border-radius: 12px;
   padding: 20px;
   transition: 0.3s;
-  color: white;
+  color: black; /* yazılar siyah */
 }
 
 .card:hover {
