@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="favicon.png">
   
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 ikonları için -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
@@ -78,6 +77,79 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    /* Dil seçici butonu */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(255, 245, 245, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(236, 31, 39, 0.3);
+      border-radius: 30px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #EC1F27;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .lang-switch:hover {
+      background: rgba(255, 235, 235, 0.9);
+      border-color: #EC1F27;
+      box-shadow: 0 6px 15px rgba(236, 31, 39, 0.15);
+    }
+
+    .lang-switch i {
+      font-size: 1.1rem;
+    }
+
+    .lang-dropdown {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      background: rgba(255, 245, 245, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(236, 31, 39, 0.2);
+      border-radius: 12px;
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      min-width: 120px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .lang-dropdown.show {
+      display: flex;
+    }
+
+    .lang-option {
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1E1E1E;
+      transition: all 0.2s ease;
+    }
+
+    .lang-option:hover {
+      background: rgba(236, 31, 39, 0.1);
+      color: #EC1F27;
+    }
+
+    .lang-option.active {
+      background: rgba(236, 31, 39, 0.15);
+      color: #EC1F27;
+      font-weight: 600;
     }
 
     .btn {
@@ -315,7 +387,7 @@
     }
 
     .service-card.featured::before {
-      content: "FEATURED";
+      content: attr(data-featured-label);
       position: absolute;
       top: -12px;
       right: 20px;
@@ -500,16 +572,26 @@
 </head>
 <body>
 
+  <!-- DİL SEÇİCİ -->
+  <div class="lang-switch" id="langSwitchBtn">
+    <i class="fas fa-globe"></i>
+    <span id="currentLangText">EN</span>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option" data-lang="en">English</div>
+      <div class="lang-option" data-lang="tr">Türkçe</div>
+    </div>
+  </div>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg-fallback"></div>
     <div class="hero-content">
       <img src="logo.png" alt="Divonia Studios" class="logo-img">
-      <h1 class="gradient-text">Developing Dreams Into Realities</h1>
-      <p class="hero-subtitle">Premium PC • Mobile • Custom Game Development Studio</p>
+      <h1 class="gradient-text" data-lang-key="heroTitle">Developing Dreams Into Realities</h1>
+      <p class="hero-subtitle" data-lang-key="heroSub">Premium PC • Mobile • Custom Game Development Studio</p>
       <div class="hero-buttons">
-        <a href="#featured" class="btn btn-primary">🎮 Explore Our Game</a>
-        <a href="#services" class="btn btn-outline">⚡ Our Services</a>
+        <a href="#featured" class="btn btn-primary" data-lang-key="heroBtn1">🎮 Explore Our Game</a>
+        <a href="#services" class="btn btn-outline" data-lang-key="heroBtn2">⚡ Our Services</a>
       </div>
     </div>
   </section>
@@ -517,19 +599,19 @@
   <!-- FEATURED GAME -->
   <section id="featured" class="featured-game">
     <div class="container">
-      <span class="section-label">🔥 FEATURED GAME</span>
+      <span class="section-label" data-lang-key="featuredLabel">🔥 FEATURED GAME</span>
       <div class="game-showcase">
         <img src="steam.jpg" alt="Date For Dead" class="game-poster">
         <h3>Date For Dead</h3>
-        <div class="game-status">Early Stage Development</div>
-        <p class="game-desc">
+        <div class="game-status" data-lang-key="gameStatus">Early Stage Development</div>
+        <p class="game-desc" data-lang-key="gameDesc">
           A thrilling PC experience coming soon to Steam. Dark atmosphere, gripping narrative, 
           and innovative mechanics are under development.
         </p>
-        <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank" class="btn btn-wishlist">
+        <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank" class="btn btn-wishlist" data-lang-key="wishlistBtn">
           🔥 Add to Wishlist on Steam
         </a>
-        <p class="steam-info">Trailer and screenshots coming soon!</p>
+        <p class="steam-info" data-lang-key="steamInfo">Trailer and screenshots coming soon!</p>
       </div>
     </div>
   </section>
@@ -537,24 +619,24 @@
   <!-- SERVICES -->
   <section id="services" class="services">
     <div class="container">
-      <h2>What We <span class="gradient-text">Offer</span></h2>
-      <p class="services-intro">Divonia Studios is your reliable partner for high-end game development and interactive solutions.</p>
+      <h2 data-lang-key="servicesTitle">What We <span class="gradient-text">Offer</span></h2>
+      <p class="services-intro" data-lang-key="servicesIntro">Divonia Studios is your reliable partner for high-end game development and interactive solutions.</p>
       <div class="services-grid">
-        <div class="service-card featured">
-          <h3>🚀 Custom Game Development</h3>
-          <p>End-to-end game production for PC, mobile, and bespoke platforms.</p>
+        <div class="service-card featured" data-featured-label="FEATURED">
+          <h3 data-lang-key="service1Title">🚀 Custom Game Development</h3>
+          <p data-lang-key="service1Desc">End-to-end game production for PC, mobile, and bespoke platforms.</p>
         </div>
         <div class="service-card">
-          <h3>📱 Mobile Games</h3>
-          <p>Engaging Android & iOS experiences.</p>
+          <h3 data-lang-key="service2Title">📱 Mobile Games</h3>
+          <p data-lang-key="service2Desc">Engaging Android & iOS experiences.</p>
         </div>
         <div class="service-card">
-          <h3>🎯 Unity Expertise</h3>
-          <p>Expert-level Unity development and prototyping.</p>
+          <h3 data-lang-key="service3Title">🎯 Unity Expertise</h3>
+          <p data-lang-key="service3Desc">Expert-level Unity development and prototyping.</p>
         </div>
         <div class="service-card">
-          <h3>🏢 Brand Experiences</h3>
-          <p>Interactive installations for brands and venues.</p>
+          <h3 data-lang-key="service4Title">🏢 Brand Experiences</h3>
+          <p data-lang-key="service4Desc">Interactive installations for brands and venues.</p>
         </div>
       </div>
     </div>
@@ -563,20 +645,20 @@
   <!-- PORTFOLIO -->
   <section class="projects">
     <div class="container">
-      <h2>Portfolio</h2>
+      <h2 data-lang-key="portfolioTitle">Portfolio</h2>
       <div class="projects-grid">
         <div class="card">
           <img src="kidzania.jpg" alt="KidZania" class="project-img">
           <h3>KidZania Experience</h3>
-          <p>Custom PC simulation for Logo Yazılım at KidZania.</p>
+          <p data-lang-key="kidzaniaDesc">Custom PC simulation for Logo Yazılım at KidZania.</p>
           <div class="links">
-            <a href="https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" target="_blank">Explore the Experience</a>
+            <a href="https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" target="_blank" data-lang-key="kidzaniaBtn">Explore the Experience</a>
           </div>
         </div>
         <div class="card">
           <img src="photosensia.png" alt="PhotoSensia Kids" class="project-img">
           <h3>PhotoSensia Kids</h3>
-          <p>Mobile photography game on Android & iOS.</p>
+          <p data-lang-key="photosensiaDesc">Mobile photography game on Android & iOS.</p>
           <div class="links">
             <a href="https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids&hl=tr" target="_blank">Google Play</a>
             <a href="https://apps.apple.com/tr/app/photosensia-kids/id6624305795?l=tr" target="_blank">App Store</a>
@@ -585,9 +667,9 @@
         <div class="card">
           <img src="steam.jpg" alt="Date For Dead" class="project-img">
           <h3>Date For Dead</h3>
-          <p>Upcoming PC thriller on Steam.</p>
+          <p data-lang-key="datefordeadDesc">Upcoming PC thriller on Steam.</p>
           <div class="links">
-            <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank">Wishlist on Steam</a>
+            <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank" data-lang-key="datefordeadBtn">Wishlist on Steam</a>
           </div>
         </div>
       </div>
@@ -597,7 +679,7 @@
   <!-- FOLLOW US -->
   <section class="social-section">
     <div class="container">
-      <h3>Follow Us</h3>
+      <h3 data-lang-key="followUs">Follow Us</h3>
       <div class="social-icons">
         <a href="https://www.instagram.com/divoniastudios/" target="_blank" class="social-icon" aria-label="Instagram">
           <i class="fab fa-instagram"></i>
@@ -611,8 +693,8 @@
 
   <!-- CONTACT -->
   <section class="contact">
-    <h2>Start a <span class="gradient-text">Project</span></h2>
-    <p>Let's build something unforgettable together.</p>
+    <h2 data-lang-key="contactTitle">Start a <span class="gradient-text">Project</span></h2>
+    <p data-lang-key="contactText">Let's build something unforgettable together.</p>
     <p><a href="mailto:contact@divoniastudios.com">contact@divoniastudios.com</a></p>
   </section>
 
@@ -620,5 +702,165 @@
     <p>© 2024 Divonia Studios — All rights reserved.</p>
   </footer>
 
+  <script>
+    (function() {
+      const translations = {
+        en: {
+          heroTitle: "Developing Dreams Into Realities",
+          heroSub: "Premium PC • Mobile • Custom Game Development Studio",
+          heroBtn1: "🎮 Explore Our Game",
+          heroBtn2: "⚡ Our Services",
+          featuredLabel: "🔥 FEATURED GAME",
+          gameStatus: "Early Stage Development",
+          gameDesc: "A thrilling PC experience coming soon to Steam. Dark atmosphere, gripping narrative, and innovative mechanics are under development.",
+          wishlistBtn: "🔥 Add to Wishlist on Steam",
+          steamInfo: "Trailer and screenshots coming soon!",
+          servicesTitle: "What We Offer",
+          servicesIntro: "Divonia Studios is your reliable partner for high-end game development and interactive solutions.",
+          service1Title: "🚀 Custom Game Development",
+          service1Desc: "End-to-end game production for PC, mobile, and bespoke platforms.",
+          service2Title: "📱 Mobile Games",
+          service2Desc: "Engaging Android & iOS experiences.",
+          service3Title: "🎯 Unity Expertise",
+          service3Desc: "Expert-level Unity development and prototyping.",
+          service4Title: "🏢 Brand Experiences",
+          service4Desc: "Interactive installations for brands and venues.",
+          portfolioTitle: "Portfolio",
+          kidzaniaDesc: "Custom PC simulation for Logo Yazılım at KidZania.",
+          kidzaniaBtn: "Explore the Experience",
+          photosensiaDesc: "Mobile photography game on Android & iOS.",
+          datefordeadDesc: "Upcoming PC thriller on Steam.",
+          datefordeadBtn: "Wishlist on Steam",
+          followUs: "Follow Us",
+          contactTitle: "Start a Project",
+          contactText: "Let's build something unforgettable together."
+        },
+        tr: {
+          heroTitle: "Hayalleri Gerçeğe Dönüştürüyoruz",
+          heroSub: "Premium PC • Mobil • Özel Oyun Geliştirme Stüdyosu",
+          heroBtn1: "🎮 Oyunumuzu Keşfedin",
+          heroBtn2: "⚡ Hizmetlerimiz",
+          featuredLabel: "🔥 ÖNE ÇIKAN OYUN",
+          gameStatus: "Erken Geliştirme Aşamasında",
+          gameDesc: "Steam'de yayınlanacak heyecan verici bir PC oyunu. Karanlık atmosfer, sürükleyici hikaye ve yenilikçi mekanikler üzerinde çalışıyoruz.",
+          wishlistBtn: "🔥 Steam'de İstek Listesine Ekle",
+          steamInfo: "Fragman ve ekran görüntüleri çok yakında!",
+          servicesTitle: "Neler Sunuyoruz",
+          servicesIntro: "Divonia Studios, üst düzey oyun geliştirme ve interaktif çözümler için güvenilir iş ortağınızdır.",
+          service1Title: "🚀 Özel Oyun Geliştirme",
+          service1Desc: "PC, mobil ve özel platformlar için uçtan uca oyun prodüksiyonu.",
+          service2Title: "📱 Mobil Oyunlar",
+          service2Desc: "Android ve iOS için etkileyici deneyimler.",
+          service3Title: "🎯 Unity Uzmanlığı",
+          service3Desc: "Uzman seviyesinde Unity geliştirme ve prototipleme.",
+          service4Title: "🏢 Marka Deneyimleri",
+          service4Desc: "Markalar ve mekanlar için interaktif kurulumlar.",
+          portfolioTitle: "Portföy",
+          kidzaniaDesc: "Logo Yazılım için KidZania'da özel PC simülasyonu.",
+          kidzaniaBtn: "Deneyimi Keşfedin",
+          photosensiaDesc: "Android ve iOS'ta mobil fotoğrafçılık oyunu.",
+          datefordeadDesc: "Steam'de yakında çıkacak PC gerilim oyunu.",
+          datefordeadBtn: "Steam'de İstek Listesine Ekle",
+          followUs: "Bizi Takip Edin",
+          contactTitle: "Bir Proje Başlat",
+          contactText: "Birlikte unutulmaz bir şey inşa edelim."
+        }
+      };
+
+      const langBtn = document.getElementById('langSwitchBtn');
+      const langDropdown = document.getElementById('langDropdown');
+      const currentLangText = document.getElementById('currentLangText');
+      const htmlTag = document.documentElement;
+
+      // Tarayıcı dilini kontrol et, yoksa İngilizce başlat
+      function getInitialLang() {
+        const saved = localStorage.getItem('divonia_lang');
+        if (saved === 'tr' || saved === 'en') return saved;
+        const browserLang = navigator.language.split('-')[0];
+        return browserLang === 'tr' ? 'tr' : 'en';
+      }
+
+      let currentLang = getInitialLang();
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('divonia_lang', lang);
+        htmlTag.lang = lang;
+        currentLangText.textContent = lang.toUpperCase();
+
+        // Tüm data-lang-key elementlerini güncelle
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+          const key = el.getAttribute('data-lang-key');
+          if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+          }
+        });
+
+        // Featured etiketi güncelle
+        const featuredLabel = lang === 'tr' ? 'ÖNE ÇIKAN' : 'FEATURED';
+        document.querySelectorAll('.service-card.featured').forEach(card => {
+          card.setAttribute('data-featured-label', featuredLabel);
+          card.style.setProperty('--featured-text', `"${featuredLabel}"`);
+        });
+
+        // CSS'teki ::before content için özel bir style ekleyelim
+        if (!document.getElementById('dynamic-featured-style')) {
+          const style = document.createElement('style');
+          style.id = 'dynamic-featured-style';
+          document.head.appendChild(style);
+        }
+        document.getElementById('dynamic-featured-style').textContent = 
+          `.service-card.featured::before { content: "${featuredLabel}"; }`;
+
+        // Dropdown'daki aktif sınıfını güncelle
+        document.querySelectorAll('.lang-option').forEach(opt => {
+          opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+        });
+
+        // servicesTitle içindeki span için özel işlem
+        const servicesTitleEl = document.querySelector('[data-lang-key="servicesTitle"]');
+        if (servicesTitleEl) {
+          const titleText = translations[lang].servicesTitle;
+          servicesTitleEl.innerHTML = titleText.replace('<span class="gradient-text">Offer</span>', 
+            lang === 'tr' ? '<span class="gradient-text">Sunuyoruz</span>' : '<span class="gradient-text">Offer</span>');
+        }
+
+        // contactTitle için benzer
+        const contactTitleEl = document.querySelector('[data-lang-key="contactTitle"]');
+        if (contactTitleEl) {
+          if (lang === 'en') {
+            contactTitleEl.innerHTML = 'Start a <span class="gradient-text">Project</span>';
+          } else {
+            contactTitleEl.innerHTML = 'Bir <span class="gradient-text">Proje</span> Başlat';
+          }
+        }
+      }
+
+      // Dropdown toggle
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+      });
+
+      // Seçeneklere tıklama
+      langDropdown.addEventListener('click', (e) => {
+        const option = e.target.closest('.lang-option');
+        if (option) {
+          const lang = option.getAttribute('data-lang');
+          applyLanguage(lang);
+          langDropdown.classList.remove('show');
+        }
+      });
+
+      // Dışarı tıklayınca kapat
+      document.addEventListener('click', () => {
+        langDropdown.classList.remove('show');
+      });
+
+      // İlk yüklemeyi yap
+      applyLanguage(currentLang);
+    })();
+  </script>
+
 </body>
-</html>```
+</html>
