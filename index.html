@@ -6,7 +6,6 @@
   <title>Divonia Studios | Premium Game Development</title>
   <link rel="icon" type="image/png" href="favicon.png">
   
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -17,15 +16,15 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      /* Arka plan resmi hafif bir koyu katman ile okunabilirliği koruyor */
+      font-family: 'Inter', sans-serif;
       background: url("background.jpg") center/cover fixed;
-      color: #FFFFFF;
+      color: #1E1E1E; /* Genel yazı rengi koyu, okunaklı */
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Çok hafif beyaz overlay, resmin canlı kalmasını sağlar */
     body::before {
       content: "";
       position: fixed;
@@ -33,12 +32,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.25); /* Çok hafif siyah, arka plan net görünüyor */
+      background: rgba(255, 255, 255, 0.15);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* İnce kırmızı tonlu gradyanlar */
+    /* Kırmızı vurgulu ince gradyanlar */
     body::after {
       content: "";
       position: fixed;
@@ -47,8 +46,8 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 0%, rgba(236, 31, 39, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 100%, rgba(236, 31, 39, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 0%, rgba(236, 31, 39, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(236, 31, 39, 0.08) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
     }
@@ -65,17 +64,17 @@
       font-family: 'Orbitron', sans-serif;
       font-weight: 800;
       letter-spacing: -0.5px;
+      color: #1E1E1E;
     }
 
     h2 {
       font-size: clamp(2.5rem, 6vw, 3.8rem);
       margin-bottom: 1.5rem;
       line-height: 1.2;
-      text-shadow: 0 0 20px rgba(236, 31, 39, 0.4);
     }
 
     .gradient-text {
-      background: linear-gradient(135deg, #EC1F27, #FF4B4B);
+      background: linear-gradient(135deg, #EC1F27, #C0392B);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -92,41 +91,50 @@
       text-decoration: none;
       transition: all 0.3s ease;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(8px);
-      color: white;
       letter-spacing: 0.3px;
     }
 
     .btn-primary {
-      background: rgba(236, 31, 39, 0.2);
-      border-color: rgba(236, 31, 39, 0.5);
+      background: #EC1F27;
+      color: white;
+      border: none;
+      box-shadow: 0 4px 15px rgba(236, 31, 39, 0.3);
     }
 
     .btn-primary:hover {
-      background: rgba(236, 31, 39, 0.35);
-      border-color: rgba(236, 31, 39, 0.8);
-      box-shadow: 0 0 25px rgba(236, 31, 39, 0.6);
+      background: #c4171f;
+      box-shadow: 0 6px 20px rgba(236, 31, 39, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(5px);
+      border: 1.5px solid #EC1F27;
+      color: #EC1F27;
+    }
+
+    .btn-outline:hover {
+      background: rgba(236, 31, 39, 0.1);
+      border-color: #EC1F27;
       transform: translateY(-2px);
     }
 
     .btn-wishlist {
-      background: linear-gradient(135deg, #1b2838, #2a475e);
+      background: #EC1F27;
       border: 2px solid #EC1F27;
       color: white;
       font-weight: 700;
       font-size: 1.1rem;
       padding: 14px 32px;
       gap: 10px;
-      box-shadow: 0 0 20px rgba(236, 31, 39, 0.4);
+      box-shadow: 0 4px 20px rgba(236, 31, 39, 0.35);
       letter-spacing: 0.4px;
     }
 
     .btn-wishlist:hover {
-      background: #EC1F27;
-      border-color: #EC1F27;
-      box-shadow: 0 0 30px rgba(236, 31, 39, 0.7);
+      background: #c4171f;
+      box-shadow: 0 8px 25px rgba(236, 31, 39, 0.55);
       transform: translateY(-2px);
     }
 
@@ -146,7 +154,7 @@
     .hero-bg-fallback {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(236, 31, 39, 0.08) 0%, rgba(0, 0, 0, 0.3) 90%);
+      background: radial-gradient(circle at center, rgba(236, 31, 39, 0.06) 0%, rgba(255,255,255,0.2) 90%);
       z-index: -1;
     }
 
@@ -161,19 +169,19 @@
     .logo-img {
       width: min(350px, 70%);
       margin-bottom: 2rem;
-      filter: drop-shadow(0 0 30px rgba(236, 31, 39, 0.7));
+      filter: drop-shadow(0 0 25px rgba(236, 31, 39, 0.6));
     }
 
     .hero h1 {
       font-size: clamp(2.2rem, 6vw, 4.5rem);
-      margin: 0.5rem 0;
+      color: #1E1E1E;
     }
 
     .hero-subtitle {
       font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: #333;
       margin: 1.5rem 0 2rem;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .hero-buttons {
@@ -183,7 +191,7 @@
       justify-content: center;
     }
 
-    /* ========== FEATURED GAME (KÜÇÜLTÜLMÜŞ KART, GÖRSEL KESİLMEDEN) ========== */
+    /* ========== FEATURED GAME ========== */
     .featured-game {
       padding: 100px 24px;
       text-align: center;
@@ -193,72 +201,69 @@
     .section-label {
       display: inline-block;
       background: rgba(236, 31, 39, 0.1);
-      border: 1px solid rgba(236, 31, 39, 0.4);
+      border: 1px solid rgba(236, 31, 39, 0.3);
       color: #EC1F27;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       padding: 6px 18px;
       border-radius: 20px;
       margin-bottom: 2rem;
-      letter-spacing: 1px;
     }
 
     .game-showcase {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(255, 245, 245, 0.8);
+      backdrop-filter: blur(15px);
       border: 1px solid rgba(236, 31, 39, 0.25);
       border-radius: 32px;
       padding: 40px 30px;
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
       max-width: 600px;
       margin: 0 auto;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
     }
 
     .game-showcase:hover {
       border-color: rgba(236, 31, 39, 0.6);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(236, 31, 39, 0.3);
+      box-shadow: 0 20px 40px rgba(236, 31, 39, 0.1);
       transform: translateY(-4px);
     }
 
-    /* Oyun görseli kesilmeyecek şekilde büyütüldü */
     .game-poster {
       width: 100%;
       max-height: 280px;
       object-fit: contain;
       border-radius: 16px;
       margin-bottom: 1.5rem;
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(236, 31, 39, 0.2);
+      background: rgba(255,255,255,0.5);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     }
 
     .featured-game h3 {
       font-size: 2rem;
-      margin-bottom: 0.3rem;
-      color: white;
+      color: #1E1E1E;
     }
 
     .game-status {
       display: inline-block;
-      background: rgba(236, 31, 39, 0.1);
+      background: rgba(236, 31, 39, 0.08);
       color: #EC1F27;
       padding: 5px 18px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
       margin: 0.8rem 0 1.5rem;
-      border: 1px solid rgba(236, 31, 39, 0.3);
+      border: 1px solid rgba(236, 31, 39, 0.2);
     }
 
     .game-desc {
       max-width: 500px;
       margin: 0 auto 2rem;
-      color: rgba(255,255,255,0.65);
+      color: #444;
       font-size: 1rem;
-      line-height: 1.7;
     }
 
     .steam-info {
-      color: rgba(255,255,255,0.45);
+      color: #777;
       font-size: 0.85rem;
       margin-top: 1rem;
     }
@@ -267,7 +272,8 @@
     .services {
       padding: 100px 24px;
       text-align: center;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 245, 245, 0.4);
+      backdrop-filter: blur(5px);
       border-top: 1px solid rgba(236, 31, 39, 0.15);
       border-bottom: 1px solid rgba(236, 31, 39, 0.15);
     }
@@ -275,7 +281,7 @@
     .services-intro {
       max-width: 600px;
       margin: 0 auto 3rem;
-      color: rgba(255,255,255,0.65);
+      color: #444;
     }
 
     .services-grid {
@@ -287,25 +293,26 @@
     }
 
     .service-card {
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 245, 245, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(236, 31, 39, 0.15);
       padding: 30px 25px;
       border-radius: 24px;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
       text-align: left;
-      backdrop-filter: blur(10px);
+      color: #1E1E1E;
     }
 
     .service-card:hover {
-      background: rgba(236, 31, 39, 0.1);
-      border-color: rgba(236, 31, 39, 0.6);
+      background: rgba(255, 235, 235, 0.85);
+      border-color: rgba(236, 31, 39, 0.5);
       transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(236, 31, 39, 0.2);
+      box-shadow: 0 15px 30px rgba(236, 31, 39, 0.1);
     }
 
     .service-card.featured {
       border-color: rgba(236, 31, 39, 0.7);
-      background: rgba(236, 31, 39, 0.08);
+      background: rgba(255, 235, 235, 0.8);
       position: relative;
     }
 
@@ -321,42 +328,39 @@
       padding: 4px 12px;
       border-radius: 20px;
       letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(236, 31, 39, 0.6);
     }
 
     .service-card h3 {
       font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-      color: white;
+      color: #1E1E1E;
     }
 
     .service-card p {
-      color: rgba(255,255,255,0.55);
+      color: #555;
       font-size: 0.95rem;
-      line-height: 1.6;
     }
 
     .case-study-mini {
       margin-top: 3rem;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.45);
+      padding: 25px;
+      background: rgba(255, 245, 245, 0.8);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
       max-width: 650px;
       margin-left: auto;
       margin-right: auto;
       border-left: 4px solid #EC1F27;
       text-align: left;
-      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
     }
 
     .case-study-mini h4 {
       color: #EC1F27;
-      margin-bottom: 0.5rem;
       font-weight: 600;
     }
 
     .case-study-mini p {
-      color: rgba(255,255,255,0.7);
+      color: #444;
       font-size: 0.95rem;
       margin-top: 8px;
     }
@@ -376,20 +380,21 @@
     }
 
     .card {
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 245, 245, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(236, 31, 39, 0.15);
       border-radius: 24px;
       padding: 24px;
       transition: all 0.3s ease;
       text-align: left;
-      backdrop-filter: blur(10px);
+      color: #1E1E1E;
     }
 
     .card:hover {
-      background: rgba(236, 31, 39, 0.08);
+      background: rgba(255, 235, 235, 0.85);
       border-color: rgba(236, 31, 39, 0.5);
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(236, 31, 39, 0.2);
+      box-shadow: 0 15px 30px rgba(236, 31, 39, 0.1);
     }
 
     .project-img {
@@ -397,49 +402,43 @@
       border-radius: 16px;
       margin-bottom: 16px;
       object-fit: contain;
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      background: rgba(255,255,255,0.5);
       max-height: 220px;
       min-height: 160px;
     }
 
     .card h3 {
-      margin-bottom: 8px;
+      color: #1E1E1E;
       font-size: 1.4rem;
-      color: white;
     }
 
     .card p {
-      color: rgba(255,255,255,0.55);
+      color: #555;
       font-size: 0.95rem;
       margin-bottom: 14px;
-      line-height: 1.5;
     }
 
-    /* Butonlar ortalanmış halde */
     .links {
       text-align: center;
       margin-top: 5px;
     }
 
     .links a {
-      background: rgba(236, 31, 39, 0.1);
-      color: #EC1F27;
+      background: #EC1F27;
+      color: white;
       padding: 7px 16px;
       border-radius: 10px;
       font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
-      transition: 0.2s;
       display: inline-block;
       margin: 4px 5px;
-      border: 1px solid rgba(236, 31, 39, 0.3);
+      transition: 0.2s;
     }
 
     .links a:hover {
-      background: rgba(236, 31, 39, 0.25);
-      border-color: #EC1F27;
-      box-shadow: 0 0 15px rgba(236, 31, 39, 0.4);
+      background: #c4171f;
+      box-shadow: 0 4px 12px rgba(236, 31, 39, 0.4);
       transform: translateY(-1px);
     }
 
@@ -447,26 +446,28 @@
     .contact {
       padding: 80px 24px;
       text-align: center;
-      background: rgba(0,0,0,0.35);
+      background: rgba(255, 245, 245, 0.5);
+      backdrop-filter: blur(5px);
     }
 
     .contact p {
       font-size: 1.2rem;
-      margin: 1rem 0;
-      color: rgba(255,255,255,0.75);
+      color: #444;
     }
 
     .contact a {
       color: #EC1F27;
       text-decoration: none;
+      font-weight: 500;
     }
 
     footer {
       padding: 30px 24px;
       text-align: center;
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
+      color: #888;
       border-top: 1px solid rgba(236, 31, 39, 0.1);
+      background: rgba(255,245,245,0.3);
     }
 
     @keyframes fadeInUp {
@@ -477,10 +478,6 @@
     @media (max-width: 768px) {
       .game-showcase {
         padding: 30px 20px;
-      }
-      .btn-wishlist {
-        font-size: 1rem;
-        padding: 12px 24px;
       }
     }
   </style>
@@ -496,7 +493,7 @@
       <p class="hero-subtitle">Premium PC • Mobile • Custom Game Development Studio</p>
       <div class="hero-buttons">
         <a href="#featured" class="btn btn-primary">🎮 Explore Our Game</a>
-        <a href="#services" class="btn">⚡ Our Services</a>
+        <a href="#services" class="btn btn-outline">⚡ Our Services</a>
       </div>
     </div>
   </section>
@@ -511,8 +508,7 @@
         <div class="game-status">Early Stage Development</div>
         <p class="game-desc">
           A thrilling PC experience coming soon to Steam. Dark atmosphere, gripping narrative, 
-          and innovative mechanics are under development by our passionate team. 
-          Be the first to know when we launch.
+          and innovative mechanics are under development.
         </p>
         <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank" class="btn btn-wishlist">
           🔥 Add to Wishlist on Steam
@@ -522,39 +518,32 @@
     </div>
   </section>
 
-  <!-- SERVICES (B2B) -->
+  <!-- SERVICES -->
   <section id="services" class="services">
     <div class="container">
       <h2>What We <span class="gradient-text">Offer</span></h2>
-      <p class="services-intro">Divonia Studios is your reliable partner for high-end game development and interactive solutions. We specialize in turning your vision into polished, market-ready products.</p>
-      
+      <p class="services-intro">Divonia Studios is your reliable partner for high-end game development and interactive solutions.</p>
       <div class="services-grid">
         <div class="service-card featured">
           <h3>🚀 Custom Game Development</h3>
-          <p>Complete end-to-end game production for PC, mobile, and bespoke platforms. From concept to launch, we own the pipeline with agile methodologies.</p>
+          <p>End-to-end game production for PC, mobile, and bespoke platforms.</p>
         </div>
         <div class="service-card">
           <h3>📱 Mobile Games</h3>
-          <p>Engaging Android & iOS experiences optimized for reach, retention, and monetization.</p>
+          <p>Engaging Android & iOS experiences.</p>
         </div>
         <div class="service-card">
           <h3>🎯 Unity Expertise</h3>
-          <p>Expert-level Unity development, rapid prototyping, and complex system architecture.</p>
+          <p>Expert-level Unity development and prototyping.</p>
         </div>
         <div class="service-card">
           <h3>🏢 Brand Experiences</h3>
-          <p>Interactive installations and gamified solutions for brands and entertainment venues.</p>
+          <p>Interactive installations for brands and venues.</p>
         </div>
       </div>
-
-      <!-- KidZania Success Story -->
       <div class="case-study-mini">
         <h4>🔹 SUCCESS STORY: KidZania Experience</h4>
-        <p>
-          We developed a custom PC-based interactive simulation for Logo Yazılım at the KidZania experience center. 
-          The project included tailored needs analysis, hardware integration, and game design from scratch. 
-          Flawless delivery, high user satisfaction.
-        </p>
+        <p>Custom PC simulation for Logo Yazılım at KidZania. Flawless delivery, high satisfaction.</p>
       </div>
     </div>
   </section>
@@ -565,9 +554,9 @@
       <h2>Portfolio</h2>
       <div class="projects-grid">
         <div class="card">
-          <img src="kidzania.jpg" alt="KidZania Experience" class="project-img">
+          <img src="kidzania.jpg" alt="KidZania" class="project-img">
           <h3>KidZania Experience</h3>
-          <p>Custom PC game for Logo Yazılım at KidZania Istanbul.</p>
+          <p>Custom PC game for Logo Yazılım.</p>
         </div>
         <div class="card">
           <img src="photosensia.png" alt="PhotoSensia Kids" class="project-img">
@@ -593,11 +582,10 @@
   <!-- CONTACT -->
   <section class="contact">
     <h2>Start a <span class="gradient-text">Project</span></h2>
-    <p>Let’s build something unforgettable together.</p>
+    <p>Let's build something unforgettable together.</p>
     <p><a href="mailto:contact@divoniastudios.com">contact@divoniastudios.com</a></p>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2024 Divonia Studios — All rights reserved.</p>
   </footer>
