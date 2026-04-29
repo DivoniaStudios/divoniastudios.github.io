@@ -18,13 +18,12 @@
     body {
       font-family: 'Inter', sans-serif;
       background: url("background.jpg") center/cover fixed;
-      color: #1E1E1E; /* Genel yazı rengi koyu, okunaklı */
+      color: #1E1E1E;
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Çok hafif beyaz overlay, resmin canlı kalmasını sağlar */
     body::before {
       content: "";
       position: fixed;
@@ -37,7 +36,6 @@
       z-index: 0;
     }
 
-    /* Kırmızı vurgulu ince gradyanlar */
     body::after {
       content: "";
       position: fixed;
@@ -215,7 +213,7 @@
       backdrop-filter: blur(15px);
       border: 1px solid rgba(236, 31, 39, 0.25);
       border-radius: 32px;
-      padding: 40px 30px;
+      padding: 30px;
       max-width: 600px;
       margin: 0 auto;
       box-shadow: 0 15px 30px rgba(0,0,0,0.05);
@@ -234,8 +232,7 @@
       object-fit: contain;
       border-radius: 16px;
       margin-bottom: 1.5rem;
-      background: rgba(255,255,255,0.5);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      /* Arka plan kaldırıldı, doğrudan kart zemini üzerinde */
     }
 
     .featured-game h3 {
@@ -340,30 +337,7 @@
       font-size: 0.95rem;
     }
 
-    .case-study-mini {
-      margin-top: 3rem;
-      padding: 25px;
-      background: rgba(255, 245, 245, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      max-width: 650px;
-      margin-left: auto;
-      margin-right: auto;
-      border-left: 4px solid #EC1F27;
-      text-align: left;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
-    }
-
-    .case-study-mini h4 {
-      color: #EC1F27;
-      font-weight: 600;
-    }
-
-    .case-study-mini p {
-      color: #444;
-      font-size: 0.95rem;
-      margin-top: 8px;
-    }
+    /* Success Story bölümü tamamen kaldırıldı */
 
     /* ========== PORTFOLIO ========== */
     .projects {
@@ -402,9 +376,9 @@
       border-radius: 16px;
       margin-bottom: 16px;
       object-fit: contain;
-      background: rgba(255,255,255,0.5);
       max-height: 220px;
       min-height: 160px;
+      /* Görsellerin arka planı yok, doğrudan kartın üzerinde */
     }
 
     .card h3 {
@@ -503,6 +477,7 @@
     <div class="container">
       <span class="section-label">🔥 FEATURED GAME</span>
       <div class="game-showcase">
+        <!-- Görselin arkasındaki beyaz arka plan kaldırıldı, şeffaf bırakıldı -->
         <img src="steam.jpg" alt="Date For Dead" class="game-poster">
         <h3>Date For Dead</h3>
         <div class="game-status">Early Stage Development</div>
@@ -541,10 +516,7 @@
           <p>Interactive installations for brands and venues.</p>
         </div>
       </div>
-      <div class="case-study-mini">
-        <h4>🔹 SUCCESS STORY: KidZania Experience</h4>
-        <p>Custom PC simulation for Logo Yazılım at KidZania. Flawless delivery, high satisfaction.</p>
-      </div>
+      <!-- SUCCESS STORY BÖLÜMÜ TAMAMEN KALDIRILDI -->
     </div>
   </section>
 
@@ -556,7 +528,8 @@
         <div class="card">
           <img src="kidzania.jpg" alt="KidZania" class="project-img">
           <h3>KidZania Experience</h3>
-          <p>Custom PC game for Logo Yazılım.</p>
+          <!-- Eski SUCCESS STORY metni buraya taşındı -->
+          <p>Custom PC simulation for Logo Yazılım at KidZania. Flawless delivery, high satisfaction.</p>
         </div>
         <div class="card">
           <img src="photosensia.png" alt="PhotoSensia Kids" class="project-img">
