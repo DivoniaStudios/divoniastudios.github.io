@@ -2,107 +2,606 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Divonia Studios</title>
-
-  <!-- Favicon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Divonia Studios | Premium Game Development</title>
   <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========== GENEL SIFIRLAMA & TEMEL AYARLAR ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400&display=swap" rel="stylesheet">
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  <link rel="stylesheet" href="style.css?v=7">
+    /* Arka plana derinlik ve premium his katan statik gradyan dokusu */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 0%, rgba(120, 50, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Tipografi hiyerarşisi */
+    h1, h2, h3, .game-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #A855F7, #6366F1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Butonlar */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 32px;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      color: white;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.7);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* Steam Wishlist butonu - Öne çıkarıldı */
+    .btn-wishlist {
+      background: linear-gradient(135deg, #1b2838, #2a475e);
+      border: 1px solid #A855F7;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 16px 40px;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-wishlist:hover {
+      background: #A855F7;
+      border-color: #A855F7;
+      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.6);
+      transform: translateY(-3px);
+    }
+
+    .btn-wishlist i {
+      font-size: 1.4rem;
+    }
+
+    /* ========== HERO SECTION (FULLSCREEN) ========== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Video arkaplan alanı (videonuz varsa kullanın) */
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.4;
+      filter: brightness(0.6);
+    }
+
+    /* Video yoksa kullanılacak yedek gradyan */
+    .hero-bg-fallback {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, #1a1a2e 0%, #0A0A0A 90%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease;
+    }
+
+    .logo-img {
+      width: min(350px, 70%);
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      margin: 0.5rem 0;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 1.5rem 0 2rem;
+      font-weight: 400;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    /* ========== FEATURED GAME (STEAM PROJESİ - ÖNE ÇIKARILMIŞ) ========== */
+    .featured-game {
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #A855F7;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .game-showcase {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 40px;
+      padding: 60px 40px;
+      backdrop-filter: blur(15px);
+      transition: all 0.4s ease;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .game-showcase:hover {
+      border-color: rgba(168, 85, 247, 0.3);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(168, 85, 247, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .game-icon {
+      width: 100px;
+      margin-bottom: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    .featured-game h3 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .game-status {
+      display: inline-block;
+      background: rgba(255,193,7,0.1);
+      color: #FFC107;
+      padding: 4px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0.8rem 0 1.5rem;
+    }
+
+    .game-desc {
+      max-width: 550px;
+      margin: 0 auto 2rem;
+      color: rgba(255,255,255,0.65);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /*  Steam widget basit bir placeholder */
+    .steam-info {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* ========== B2B SERVICES (ÖZEL OYUN GELİŞTİRME VURGULU) ========== */
+    .services {
+      padding: 100px 24px;
+      text-align: center;
+      background: rgba(168, 85, 247, 0.02);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .services-intro {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 35px 25px;
+      border-radius: 24px;
+      transition: all 0.4s ease;
+      text-align: left;
+      backdrop-filter: blur(5px);
+    }
+
+    .service-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(168, 85, 247, 0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .service-card.featured {
+      border-color: rgba(168, 85, 247, 0.6);
+      background: rgba(168, 85, 247, 0.05);
+      position: relative;
+    }
+
+    .service-card.featured::before {
+      content: "ÖNE ÇIKAN";
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: #A855F7;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: white;
+    }
+
+    .service-card p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* KidZania Referans Vurgusu */
+    .case-study-mini {
+      margin-top: 3rem;
+      padding: 30px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      border-left: 4px solid #A855F7;
+      text-align: left;
+      backdrop-filter: blur(5px);
+    }
+
+    .case-study-mini h4 {
+      color: #A855F7;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* ========== PROJECTS (TÜM PORTFOLYO) ========== */
+    .projects {
+      padding: 100px 24px;
+      text-align: center;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 2rem auto 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 24px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      text-align: left;
+      backdrop-filter: blur(5px);
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(168, 85, 247, 0.25);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .project-img {
+      width: 100%;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin-bottom: 6px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .links a {
+      background: rgba(168, 85, 247, 0.15);
+      color: #A855F7;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-block;
+      margin-right: 6px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .links a:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: #A855F7;
+    }
+
+    /* ========== CONTACT & FOOTER ========== */
+    .contact {
+      padding: 80px 24px;
+      text-align: center;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .contact p {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .contact a {
+      color: #A855F7;
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 30px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Basit animasyon */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .game-showcase {
+        padding: 30px 20px;
+      }
+      .btn-wishlist {
+        font-size: 1rem;
+        padding: 12px 24px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- HERO -->
+  <!-- ==================== HERO ==================== -->
   <section class="hero">
-    <img src="logo.png" class="logo">
-    <p class="tagline">Developing Dreams Into Realities</p>
-    <p class="sub">PC • Mobile • Custom Game Development</p>
+    <!-- VİDEO: Eğer showreel.mp4 varsa class="hero-video" ekleyip src göster, aksi halde sadece fallback -->
+    <!-- <video autoplay muted loop playsinline class="hero-video" poster="fallback.jpg">
+      <source src="showreel.mp4" type="video/mp4">
+    </video> -->
+    <div class="hero-bg-fallback"></div>
+    
+    <div class="hero-content">
+      <img src="logo.png" alt="Divonia Studios" class="logo-img">
+      <h1 class="gradient-text">Developing Dreams Into Realities</h1>
+      <p class="hero-subtitle">Premium PC • Mobile • Custom Game Development Studio</p>
+      <div class="hero-buttons">
+        <a href="#featured" class="btn btn-primary">🎮 Explore Our Game</a>
+        <a href="#services" class="btn">⚡ Our Services</a>
+      </div>
+    </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <h2>About</h2>
-    <p>
-      Divonia Studios is an independent game development studio focused on creating immersive
-      experiences across PC and mobile platforms. We also develop custom interactive solutions
-      for brands and entertainment venues.
-    </p>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="projects">
-    <h2>Projects</h2>
-
-    <div class="projects-grid">
-
-      <div class="card">
-        <img src="kidzania.jpg" class="project-img">
-        <h3>KidZania Experience</h3>
-        <p>Custom PC game developed for Logo Yazılım in KidZania experience center.</p>
-      </div>
-
-      <div class="card">
-        <img src="photosensia.png" class="project-img">
-        <h3>PhotoSensia Kids</h3>
-        <p>Mobile photography game released on Android & iOS.</p>
-        <div class="links">
-          <a href="https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids&hl=tr" target="_blank">Google Play</a>
-          <a href="https://apps.apple.com/tr/app/photosensia-kids/id6624305795?l=tr" target="_blank">App Store</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="steam.jpg" class="project-img">
+  <!-- ==================== FEATURED GAME (STEAM PROJESİ) ==================== -->
+  <section id="featured" class="featured-game">
+    <div class="container">
+      <span class="section-label">FEATURED GAME</span>
+      <div class="game-showcase">
+        <img src="steam.jpg" alt="Date For Dead" class="game-icon">
         <h3>Date For Dead</h3>
-        <p>Upcoming PC game available on Steam.</p>
-        <div class="links">
-          <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank">View on Steam</a>
+        <div class="game-status">Early Stage Development</div>
+        <p class="game-desc">
+          A thrilling PC experience coming soon to Steam. Dark atmosphere, gripping narrative, 
+          and innovative mechanics are under development by our passionate team. 
+          Be the first to know when we launch.
+        </p>
+        <!-- Steam Wishlist Butonu -->
+        <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank" class="btn btn-wishlist">
+          🔥 Add to Wishlist on Steam
+        </a>
+        <p class="steam-info">Fragman ve ekran görüntüleri çok yakında!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== B2B SERVICES (ÖZEL OYUN GELİŞTİRME ÖNE ÇIKARILDI) ==================== -->
+  <section id="services" class="services">
+    <div class="container">
+      <h2>What We <span class="gradient-text">Offer</span></h2>
+      <p class="services-intro">Divonia Studios is your reliable partner for high-end game development and interactive solutions. We specialize in turning your vision into polished, market-ready products.</p>
+      
+      <div class="services-grid">
+        <div class="service-card featured">
+          <h3>🚀 Custom Game Development</h3>
+          <p>Complete end-to-end game production for PC, mobile, and bespoke platforms. From concept to launch, we own the pipeline with agile methodologies.</p>
+        </div>
+        <div class="service-card">
+          <h3>📱 Mobile Games</h3>
+          <p>Engaging Android & iOS experiences optimized for reach, retention, and monetization.</p>
+        </div>
+        <div class="service-card">
+          <h3>🎯 Unity Expertise</h3>
+          <p>Expert-level Unity development, rapid prototyping, and complex system architecture.</p>
+        </div>
+        <div class="service-card">
+          <h3>🏢 Brand Experiences</h3>
+          <p>Interactive installations and gamified solutions for brands and entertainment venues.</p>
         </div>
       </div>
 
+      <!-- KidZania Case Study Referansı -->
+      <div class="case-study-mini">
+        <h4>🔹 BAŞARI HİKAYESİ: KidZania Experience</h4>
+        <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-top: 8px;">
+          Logo Yazılım için KidZania deneyim merkezine özel PC tabanlı interaktif bir simülasyon geliştirdik. 
+          Proje, kurumsal müşteriye özel ihtiyaç analizi, donanım entegrasyonu ve sıfırdan oyun tasarımını kapsadı. 
+          <strong style="color: white;">Sorunsuz teslim, yüksek kullanıcı memnuniyeti.</strong>
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-<section class="services">
-  <h2>Services</h2>
-
-  <div class="services-grid">
-
-    <div class="service-card">
-      <h3>PC Game Dev</h3>
-      <p>High-quality PC game development using modern engines.</p>
+  <!-- ==================== TÜM PROJELER (PORTFOLYO) ==================== -->
+  <section class="projects">
+    <div class="container">
+      <h2>Portfolio</h2>
+      <div class="projects-grid">
+        <!-- KidZania -->
+        <div class="card">
+          <img src="kidzania.jpg" alt="KidZania Experience" class="project-img">
+          <h3>KidZania Experience</h3>
+          <p>Custom PC game for Logo Yazılım at KidZania Istanbul.</p>
+        </div>
+        <!-- PhotoSensia -->
+        <div class="card">
+          <img src="photosensia.png" alt="PhotoSensia Kids" class="project-img">
+          <h3>PhotoSensia Kids</h3>
+          <p>Mobile photography game on Android & iOS.</p>
+          <div class="links">
+            <a href="https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids&hl=tr" target="_blank">Google Play</a>
+            <a href="https://apps.apple.com/tr/app/photosensia-kids/id6624305795?l=tr" target="_blank">App Store</a>
+          </div>
+        </div>
+        <!-- Date For Dead (tekrar ama portföyde de bulunsun) -->
+        <div class="card">
+          <img src="steam.jpg" alt="Date For Dead" class="project-img">
+          <h3>Date For Dead</h3>
+          <p>Upcoming PC thriller on Steam.</p>
+          <div class="links">
+            <a href="https://store.steampowered.com/app/4622170/Date_For_Dead/" target="_blank">Wishlist on Steam</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="service-card">
-      <h3>Mobile Games</h3>
-      <p>Engaging Android & iOS experiences.</p>
-    </div>
-
-    <div class="service-card">
-      <h3>Custom Projects</h3>
-      <p>Interactive experiences for brands & events.</p>
-    </div>
-
-    <div class="service-card">
-      <h3>Unity Development</h3>
-      <p>Expert-level Unity solutions and prototyping.</p>
-    </div>
-
-  </div>
-</section>
-
-  <!-- CONTACT -->
+  <!-- ==================== CONTACT ==================== -->
   <section class="contact">
-    <h2>Contact</h2>
-    <p>contact@divoniastudios.com</p>
+    <h2>Start a <span class="gradient-text">Project</span></h2>
+    <p>Let’s build something unforgettable together.</p>
+    <p><a href="mailto:contact@divoniastudios.com">contact@divoniastudios.com</a></p>
   </section>
 
+  <!-- ==================== FOOTER ==================== -->
   <footer>
-    <p>© 2024 Divonia Studios</p>
+    <p>© 2024 Divonia Studios — All rights reserved.</p>
   </footer>
 
 </body>
