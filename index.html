@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="favicon.png">
   
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 ikonları için -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
     * {
@@ -232,7 +234,6 @@
       object-fit: contain;
       border-radius: 16px;
       margin-bottom: 1.5rem;
-      /* Arka plan kaldırıldı, doğrudan kart zemini üzerinde */
     }
 
     .featured-game h3 {
@@ -337,8 +338,6 @@
       font-size: 0.95rem;
     }
 
-    /* Success Story bölümü tamamen kaldırıldı */
-
     /* ========== PORTFOLIO ========== */
     .projects {
       padding: 100px 24px;
@@ -362,6 +361,8 @@
       transition: all 0.3s ease;
       text-align: left;
       color: #1E1E1E;
+      display: flex;
+      flex-direction: column;
     }
 
     .card:hover {
@@ -378,7 +379,6 @@
       object-fit: contain;
       max-height: 220px;
       min-height: 160px;
-      /* Görsellerin arka planı yok, doğrudan kartın üzerinde */
     }
 
     .card h3 {
@@ -390,11 +390,12 @@
       color: #555;
       font-size: 0.95rem;
       margin-bottom: 14px;
+      flex-grow: 1;
     }
 
     .links {
       text-align: center;
-      margin-top: 5px;
+      margin-top: auto;
     }
 
     .links a {
@@ -414,6 +415,47 @@
       background: #c4171f;
       box-shadow: 0 4px 12px rgba(236, 31, 39, 0.4);
       transform: translateY(-1px);
+    }
+
+    /* ========== SOCIAL / FOLLOW US ========== */
+    .social-section {
+      padding: 60px 24px;
+      text-align: center;
+      background: rgba(255, 245, 245, 0.4);
+      backdrop-filter: blur(5px);
+    }
+
+    .social-section h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: #1E1E1E;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #EC1F27;
+      color: white;
+      font-size: 1.8rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(236, 31, 39, 0.3);
+    }
+
+    .social-icon:hover {
+      background: #c4171f;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(236, 31, 39, 0.5);
     }
 
     /* ========== CONTACT & FOOTER ========== */
@@ -477,7 +519,6 @@
     <div class="container">
       <span class="section-label">🔥 FEATURED GAME</span>
       <div class="game-showcase">
-        <!-- Görselin arkasındaki beyaz arka plan kaldırıldı, şeffaf bırakıldı -->
         <img src="steam.jpg" alt="Date For Dead" class="game-poster">
         <h3>Date For Dead</h3>
         <div class="game-status">Early Stage Development</div>
@@ -516,7 +557,6 @@
           <p>Interactive installations for brands and venues.</p>
         </div>
       </div>
-      <!-- SUCCESS STORY BÖLÜMÜ TAMAMEN KALDIRILDI -->
     </div>
   </section>
 
@@ -528,8 +568,10 @@
         <div class="card">
           <img src="kidzania.jpg" alt="KidZania" class="project-img">
           <h3>KidZania Experience</h3>
-          <!-- Eski SUCCESS STORY metni buraya taşındı -->
-          <p>Custom PC simulation for Logo Yazılım at KidZania. Flawless delivery, high satisfaction.</p>
+          <p>Custom PC simulation for Logo Yazılım at KidZania.</p>
+          <div class="links">
+            <a href="https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" target="_blank">Explore the Experience</a>
+          </div>
         </div>
         <div class="card">
           <img src="photosensia.png" alt="PhotoSensia Kids" class="project-img">
@@ -552,6 +594,21 @@
     </div>
   </section>
 
+  <!-- FOLLOW US -->
+  <section class="social-section">
+    <div class="container">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/divoniastudios/" target="_blank" class="social-icon" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/divonia-studios/?viewAsMember=true" target="_blank" class="social-icon" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section class="contact">
     <h2>Start a <span class="gradient-text">Project</span></h2>
@@ -564,4 +621,4 @@
   </footer>
 
 </body>
-</html>
+</html>```
