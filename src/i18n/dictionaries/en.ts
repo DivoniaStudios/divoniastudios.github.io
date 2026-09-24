@@ -61,7 +61,7 @@ export const en: Dictionary = {
   },
   deck: {
     title: "Swipe right. Fall in love. Don't ask what it costs.",
-    text: "A dark romantic comedy where every match brings you closer to love, or something far more dangerous. Meet monsters, go on dates, and shape your relationships through meaningful choices.",
+    text: "Date For Dead is a narrative-driven dating sim where your choices shape your relationships. As Victoria Frankenstein, swipe through profiles, flirt and go on dates. But what Victoria is looking for isn’t a new love; it’s a way to bring love back.",
     facts: [
       { k: "Platform", v: "Windows" },
       { k: "Languages", v: "English, Turkish" },

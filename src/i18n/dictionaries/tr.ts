@@ -63,8 +63,8 @@ export const tr = {
     ],
   },
   deck: {
-    title: "Sağa kaydır. Aşık ol. Bedelini sorma.",
-    text: "Her eşleşmenin seni aşka ya da çok daha karanlık bir şeye yaklaştırdığı bir romantik kara mizah. Canavarlarla tanış, date'lere çık, seçimlerinle ilişkilerini şekillendir.",
+    title: "Sağa kaydır. Âşık ol. Bedelini sorma.",
+    text: "Date For Dead, seçimlerin ilişkileri şekillendirdiği hikâye odaklı bir dating sim. Victoria Frankenstein olarak profilleri kaydır, flört et ve randevulara çık. Ama Victoria’nın aradığı şey yeni bir aşk değil; aşkı geri getirmenin bir yolu.",
     facts: [
       { k: "Platform", v: "Windows" },
       { k: "Diller", v: "Türkçe, İngilizce" },

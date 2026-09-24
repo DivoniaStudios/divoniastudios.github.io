@@ -55,8 +55,8 @@ export const games: Game[] = [
     platforms: ["pc"],
     status: { tr: "Erken Erişim · Yakında", en: "Early Access · Coming soon" },
     summary: {
-      tr: "Canavarlarla insanların birlikte yaşadığı bir dünyada geçen, hikâye odaklı bir dating sim. Sağa kaydır. Aşık ol. Bedelini sorma.",
-      en: "A narrative-driven dating sim set in a world where monsters and humans coexist. Swipe right. Fall in love. Don't ask what it costs.",
+      tr: "Date For Dead, seçimlerin ilişkileri şekillendirdiği hikâye odaklı bir dating sim. Victoria Frankenstein olarak profilleri kaydır, flört et ve randevulara çık. Ama Victoria’nın aradığı şey yeni bir aşk değil; aşkı geri getirmenin bir yolu. Sağa kaydır. Âşık ol. Bedelini sorma.",
+      en: "Date For Dead is a narrative-driven dating sim where your choices shape your relationships. As Victoria Frankenstein, swipe through profiles, flirt and go on dates. But what Victoria is looking for isn’t a new love; it’s a way to bring love back. Swipe right. Fall in love. Don't ask what it costs.",
     },
     cover: "/games/date-for-dead/ss-1.webp",
     coverSmall: "/games/date-for-dead/ss-1-sm.webp",
@@ -102,8 +102,8 @@ export const games: Game[] = [
     platforms: ["pc", "installation"],
     status: { tr: "Yayında", en: "Live" },
     summary: {
-      tr: "KidZania İstanbul'daki Logo Yazılım Geliştirme Merkezi için geliştirdiğimiz PC oyunu. Merkeze gelen çocuklar oyunu oradaki bilgisayarlarda oynuyor.",
-      en: "A PC game we built for Logo's Software Development Center at KidZania Istanbul. Kids visiting the center play it on the computers there.",
+      tr: "KidZania İstanbul’daki Logo Yazılım Geliştirme Merkezi için bir PC oyunu geliştirdik. Merkezi ziyaret eden çocuklar, oyunu alandaki bilgisayarlarda oynayarak yazılım dünyasını eğlenceli bir deneyimle keşfediyor.",
+      en: "We developed a PC game for Logo’s Software Development Center at KidZania Istanbul. Kids visiting the center play it on the computers there and discover the world of software through a fun experience.",
     },
     cover: "/games/kidzania/cover.webp",
     coverSmall: "/games/kidzania/cover-sm.webp",
