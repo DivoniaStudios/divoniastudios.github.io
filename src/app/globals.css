@@ -325,7 +325,16 @@
         transparent 1px,
         transparent 3px
       );
-    mix-blend-mode: overlay;
+  }
+
+  /*
+   * Dokunmatik cihazlarda doku katmanı yok: tüm ekranı kaplayan sabit bir
+   * katman, altında WebGL tuvali varken her kaydırma karesinde yeniden
+   * birleştiriliyor ve telefonda takılmaya yol açıyordu. Küçük ekranda
+   * zaten seçilmiyor.
+   */
+  @media (pointer: coarse) {
+    .crt { display: none; }
   }
 
   .crt::after {
@@ -479,11 +488,18 @@
    * tutulup büyütülüyor; pixelated ile pikseller keskin kalıyor. Sahne
    * kurulana kadar (ya da WebGL yoksa) altındaki degrade görünür.
    */
+  /*
+   * Tuval "büyük görünüm" yüksekliğinde (100lvh), sabit. Telefonda adres
+   * çubuğu kaydırırken küçülüp büyüyor ve görünür yükseklik (dvh) her
+   * seferinde değişiyor; tuval ona bağlı olsaydı her değişimde GPU belleği
+   * baştan ayrılıp kalp yeniden çizilirdi (ana sayfadaki kaydırma
+   * takılması buydu). Fazlası sticky kabın overflow'unda kırpılıyor.
+   */
   .story-canvas {
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto 0;
     width: 100%;
-    height: 100%;
+    height: 100lvh;
     display: block;
     image-rendering: crisp-edges;
     image-rendering: pixelated;

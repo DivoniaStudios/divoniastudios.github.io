@@ -65,7 +65,9 @@ export function Header({
         open
           ? "border-line bg-void border-b"
           : scrolled
-            ? "border-line bg-void/85 border-b backdrop-blur-md"
+            ? /* Telefonda bulanıklık yok: kaydırırken her karede WebGL
+                 tuvalinin üstünden yeniden hesaplanıyordu */
+              "border-line bg-void/95 border-b lg:bg-void/85 lg:backdrop-blur-md"
             : "border-b border-transparent"
       }`}
     >

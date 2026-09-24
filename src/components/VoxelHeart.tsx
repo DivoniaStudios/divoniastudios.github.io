@@ -421,15 +421,35 @@ export function VoxelHeart({
     let width = 0;
     let height = 0;
     let level = -1;
+    let cssW = 0;
+    let cssH = 0;
+    // Dokunmatik cihaz: adres çubuğu yalnızca yüksekliği oynatıyor
+    const touch = window.matchMedia("(pointer: coarse)").matches;
 
     /*
      * Tuval cihaz çözünürlüğüne yakın çiziliyor; piksel bütçesini aşarsa
      * orantılı küçültülüp CSS (image-rendering: pixelated) ile keskin
      * büyütülüyor.
      */
-    const resize = (nextLevel: number) => {
+    /** Boyut ya da seviye değiştiyse tuvali yeniden kurar; değiştiyse true. */
+    const resize = (nextLevel: number): boolean => {
       const rect = canvas.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
+      if (!rect.width || !rect.height) return false;
+      /*
+       * Telefonda kaydırırken adres çubuğu küçülüp büyüyor; genişlik aynı,
+       * yükseklik birkaç yüz piksele kadar oynuyor. Bu değişimlerde tuval
+       * yeniden kurulmuyor (GPU belleği baştan ayrılıp kalp yeniden
+       * çiziliyor, kaydırma takılıyordu). Tuval CSS ile hafifçe esniyor;
+       * iOS'ta 100lvh sayesinde zaten esnemiyor.
+       */
+      if (
+        touch &&
+        nextLevel === level &&
+        Math.round(rect.width) === cssW &&
+        Math.abs(rect.height - cssH) / cssH < 0.25
+      ) {
+        return false;
+      }
       // Cihaz çözünürlüğü (en fazla 2x), seviyenin piksel boyutu ve piksel
       // bütçesiyle sınırlanıyor.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -439,10 +459,12 @@ export function VoxelHeart({
       if (raw > budget) scale *= Math.sqrt(budget / raw);
       const w = Math.max(1, Math.round(rect.width * scale));
       const h = Math.max(1, Math.round(rect.height * scale));
-      if (w === width && h === height && nextLevel === level) return;
+      if (w === width && h === height && nextLevel === level) return false;
       width = w;
       height = h;
       level = nextLevel;
+      cssW = Math.round(rect.width);
+      cssH = rect.height;
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
@@ -450,6 +472,7 @@ export function VoxelHeart({
       // Metin düzeniyle aynı eşik (TitleStory ve .story-veil: 1024px)
       gl.uniform1f(uNarrow, rect.width < 1024 ? 1 : 0);
       gl.uniform1f(uColors, LEVELS[nextLevel].colors);
+      return true;
     };
 
     let ptrX = 0;
@@ -531,9 +554,10 @@ export function VoxelHeart({
       // Tek kare: kalp kurulmuş, hareketsiz
       shown = 0;
       draw(start + 400, 1.2);
+      // Yalnızca boyut gerçekten değiştiyse yeniden çiz (adres çubuğu
+      // kaydırırken resize olayı sürekli geliyor ama tuval boyutu sabit)
       const onResize = () => {
-        width = 0;
-        draw(start + 400, 1.2);
+        if (resize(levelFor(0))) draw(start + 400, 1.2);
       };
       window.addEventListener("resize", onResize);
       return () => {
