@@ -9,28 +9,35 @@ import {
   Check,
 } from "@phosphor-icons/react";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { WEB3FORMS_ACCESS_KEY } from "@/data/site";
+
+type Status = "idle" | "sending" | "sent" | "error";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 type Draft = { subject: string; body: string };
 
 /**
- * Site statik (sunucu yok), bu yüzden form mesajı kendisi göndermiyor;
- * hazırlayıp ziyaretçinin kendi e-postasıyla göndermesini sağlıyor.
+ * Site statik (sunucu yok). Mesaj Web3Forms ile doğrudan stüdyoya
+ * gönderiliyor (anahtar: src/data/site.ts). Mailin "yanıtla" adresi
+ * ziyaretçinin e-postası; doğrudan cevap verilebiliyor.
  *
- * Önceden yalnızca mailto: açılıyordu. Bu, bilgisayarda tanımlı bir
- * e-posta uygulaması gerektiriyor: Mac'te Mail hazır geldiği için
- * çalışıyor, Windows'ta çoğu kişide tanımlı değil ve hiçbir şey olmuyordu.
- * Şimdi gönderince seçenekler çıkıyor: Gmail ve Outlook'un web yazma
- * sayfaları (alıcı, konu, metin dolu), e-posta uygulaması ve kopyalama.
+ * Yedek akış: anahtar tanımlı değilse ya da gönderim başarısız olursa
+ * (bağlantı, servis) mesaj hazırlanıp seçenekler çıkıyor: Gmail ve
+ * Outlook'un web yazma sayfaları (alıcı, konu, metin dolu), e-posta
+ * uygulaması ve kopyalama. Yalnızca mailto: olsaydı Windows'ta çoğu
+ * kişide hiçbir şey açılmazdı.
  *
- * Gerçek gönderim istenirse (Formspree, Web3Forms vb.) handleSubmit'in
- * sonu o servise istek atacak şekilde değiştirilir.
+ * Spam: botların doldurduğu gizli "botcheck" alanı (Web3Forms bunu tanıyor).
  */
 export function ContactForm({ dict }: { dict: Dictionary }) {
   const t = dict.contactPage.form;
   const to = dict.footer.email;
   const [errors, setErrors] = useState<Errors>({});
   const [draft, setDraft] = useState<Draft | null>(null);
+  const [status, setStatus] = useState<Status>("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+  const sentRef = useRef<HTMLDivElement>(null);
+  const direct = WEB3FORMS_ACCESS_KEY.length > 0;
   const [copied, setCopied] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -42,8 +49,14 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
     panel?.querySelector<HTMLElement>("[data-focus]")?.focus({ preventScroll: true });
   }, [draft]);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  // Gönderildi: onay mesajına odaklan
+  useEffect(() => {
+    if (status === "sent") sentRef.current?.focus();
+  }, [status]);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "sending") return;
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
@@ -65,9 +78,51 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       return;
     }
 
+    const mailSubject = `${subject || dict.meta.siteName}: ${name}`;
     const body = [`${t.bodyName}: ${name}`, `${t.email}: ${email}`, "", message].join("\n");
     setCopied(false);
-    setDraft({ subject: `${subject || dict.meta.siteName}: ${name}`, body });
+
+    if (!direct) {
+      setDraft({ subject: mailSubject, body });
+      return;
+    }
+
+    // Tuzak alan işaretliyse bot: göndermeden başarılı gibi davran
+    if (data.get("botcheck")) {
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("sending");
+    setDraft(null);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Divonia Studios web sitesi · ${mailSubject}`,
+          from_name: "Divonia Studios web sitesi",
+          name,
+          email,
+          topic: subject,
+          message,
+        }),
+        signal: controller.signal,
+      });
+      const result = (await response.json().catch(() => null)) as { success?: boolean } | null;
+      if (!response.ok || !result?.success) throw new Error("send failed");
+      setStatus("sent");
+      formRef.current?.reset();
+    } catch {
+      // Mesaj kaybolmasın: hazırlayıp yedek seçenekleri göster
+      setStatus("error");
+      setDraft({ subject: mailSubject, body });
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   const enc = encodeURIComponent;
@@ -104,7 +159,48 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
 
   return (
     // Form değişirse hazırlanan mesaj eskir; seçenekler kapanıyor
-    <form onSubmit={handleSubmit} onInput={() => draft && setDraft(null)} noValidate>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      onInput={() => {
+        if (draft) setDraft(null);
+        if (status === "error") setStatus("idle");
+      }}
+      noValidate
+    >
+      {status === "sent" && (
+        <div
+          ref={sentRef}
+          tabIndex={-1}
+          role="status"
+          className="px-notch px-box mb-8 p-6 outline-none sm:p-8"
+          style={{ ["--px-border" as string]: "var(--accent)" }}
+        >
+          <p className="font-display flex items-center gap-2 text-xl font-bold">
+            <Check size={22} weight="bold" className="text-accent-text" aria-hidden />
+            {t.sentTitle}
+          </p>
+          <p className="text-muted mt-2 text-sm leading-relaxed">{t.sentText}</p>
+          <button
+            type="button"
+            onClick={() => setStatus("idle")}
+            className="font-display text-ink mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline decoration-2 underline-offset-4"
+          >
+            {t.sendAnother}
+          </button>
+        </div>
+      )}
+
+      {/* Spam tuzağı: insanlar görmüyor, botlar dolduruyor */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <div className="grid gap-6 sm:grid-cols-2">
         <Field label={t.name} htmlFor="name" error={errors.name}>
           <input id="name" name="name" type="text" autoComplete="name" className={field} aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} />
@@ -151,10 +247,25 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       </div>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-        <button type="submit" className="btn-px btn-primary self-start">
-          <span className="px-notch px-box">{t.submit}</span>
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          aria-busy={status === "sending"}
+          className="btn-px btn-primary self-start disabled:cursor-wait disabled:opacity-70"
+        >
+          <span className="px-notch px-box">{status === "sending" ? t.sending : t.submit}</span>
         </button>
-        {!draft && <p className="text-faint text-sm">{t.note}</p>}
+        {!draft && (
+          <p className="text-faint text-sm">
+            {direct ? (
+              <>
+                {t.noteDirect} {t.privacy}
+              </>
+            ) : (
+              t.note
+            )}
+          </p>
+        )}
       </div>
 
       {draft && links && (
@@ -164,6 +275,11 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           style={{ ["--px-border" as string]: "var(--accent)" }}
           aria-live="polite"
         >
+          {status === "error" && (
+            <p role="alert" className="text-accent-text mb-3 text-sm font-medium">
+              {t.sendError}
+            </p>
+          )}
           <p data-focus tabIndex={-1} className="font-display text-xl font-bold outline-none">
             {t.readyTitle}
           </p>
