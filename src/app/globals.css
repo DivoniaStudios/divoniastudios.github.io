@@ -34,6 +34,10 @@
   --scene-frame: #f1ecf4;
   --scene-star: #bfb8d9;
 
+  /* Arka plan: seviye editörü ızgarası (bkz. body) */
+  --grid-line: rgb(241 236 244 / 0.06);
+  --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(241,236,244)' fill-opacity='0.32' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
+
   /* Temaya göre değişen görseller (logo, kalp işareti) */
   --show-dark: block;
   --show-light: none;
@@ -65,6 +69,8 @@
   /* Gündüz kalp, logonun orijinal renkleriyle: siyah çerçeve, kırmızı gövde */
   --scene-frame: #221e2b;
   --scene-star: #9a93ad;
+  --grid-line: rgb(23 20 31 / 0.075);
+  --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(23,20,31)' fill-opacity='0.34' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
   --show-dark: none;
   --show-light: block;
 }
@@ -87,6 +93,8 @@
     /* Gündüz kalp, logonun orijinal renkleriyle: siyah çerçeve, kırmızı gövde */
     --scene-frame: #221e2b;
     --scene-star: #9a93ad;
+    --grid-line: rgb(23 20 31 / 0.075);
+    --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(23,20,31)' fill-opacity='0.34' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
     --show-dark: none;
     --show-light: block;
 }
@@ -124,8 +132,21 @@
     scrollbar-width: thin;
   }
 
+  /*
+   * Arka plan: oyun motorlarının sahne düzenleyicisindeki gibi bir
+   * seviye editörü ızgarası. 48px karolar, her dört karede bir kesişim
+   * işareti (+). Sayfanın kendi zemini; üstte ayrı bir katman olmadığı
+   * için telefonda kaydırma maliyeti yok. Açılıştaki voksel sahnesi aynı
+   * ızgarayı kendi içinde çiziyor (VoxelHeart.tsx).
+   */
   body {
     background-color: var(--void);
+    background-image:
+      var(--grid-plus),
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 192px 192px, 48px 48px, 48px 48px;
+    background-position: -8px -8px, 0 0, 0 0;
     color: var(--ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -306,45 +327,6 @@
     transition: color 160ms ease;
   }
   .link-px:hover { color: var(--accent-text); }
-
-  /*
-   * Ekran dokusu: çok hafif tarama çizgileri + kumlanma. Sabit ve
-   * etkileşimsiz bir katman; kaydırılan kapsayıcıya konmuyor, yoksa her
-   * karede yeniden boyanıyor.
-   */
-  .crt {
-    position: fixed;
-    inset: 0;
-    z-index: 70;
-    pointer-events: none;
-    background:
-      repeating-linear-gradient(
-        to bottom,
-        color-mix(in srgb, var(--ink) 2%, transparent) 0,
-        color-mix(in srgb, var(--ink) 2%, transparent) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-  }
-
-  /*
-   * Dokunmatik cihazlarda doku katmanı yok: tüm ekranı kaplayan sabit bir
-   * katman, altında WebGL tuvali varken her kaydırma karesinde yeniden
-   * birleştiriliyor ve telefonda takılmaya yol açıyordu. Küçük ekranda
-   * zaten seçilmiyor.
-   */
-  @media (pointer: coarse) {
-    .crt { display: none; }
-  }
-
-  .crt::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    /* Hafif tutuluyor: daha yüksekte tüm sayfaya pus gibi çöküyordu */
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  }
 
   /* Bölüm başlığı altında kırmızı piksel çizgi */
   .px-rule {

@@ -118,7 +118,7 @@ export function GameDetailContent({
       </section>
 
       {/* Özellikler: solda sabit başlık, sağda liste */}
-      <section className="bg-deep border-line border-y py-24 sm:py-32">
+      <section className="bg-deep/75 border-line border-y py-24 sm:py-32">
         <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHeading title={t.featuresTitle} />
@@ -232,7 +232,7 @@ export function GameDetailContent({
       </section>
 
       {/* Künye ve çağrı */}
-      <section className="bg-deep border-line border-t py-24 sm:py-32">
+      <section className="bg-deep/75 border-line border-t py-24 sm:py-32">
         <Container className="grid gap-14 lg:grid-cols-2">
           <div data-reveal>
             <h2 className="text-4xl leading-[1.04] font-bold sm:text-5xl">{t.ctaTitle}</h2>

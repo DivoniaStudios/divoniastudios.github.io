@@ -121,7 +121,6 @@ export default async function LocaleLayout({
         >
           {dict.common.skipToContent}
         </a>
-        <div className="crt" aria-hidden="true" />
         <SmoothScroll />
         <Motion />
         <Header locale={locale as Locale} nav={dict.nav} cta={dict.common.startProject} />

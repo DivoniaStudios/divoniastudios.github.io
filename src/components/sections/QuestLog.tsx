@@ -17,7 +17,7 @@ export function QuestLog({ locale, dict }: { locale: Locale; dict: Dictionary })
   const photosensia = client.find((game) => game.slug === "photosensia-kids");
 
   return (
-    <section className="bg-deep border-line border-y py-24 sm:py-32">
+    <section className="bg-deep/75 border-line border-y py-24 sm:py-32">
       <Container>
         <SectionHeading title={dict.quests.title} intro={dict.quests.intro} />
 

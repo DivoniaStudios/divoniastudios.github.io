@@ -20,7 +20,7 @@ export const socials = [
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const keys: PageKey[] = ["games", "services", "contact"];
   return (
-    <footer className="border-line bg-deep border-t">
+    <footer className="border-line bg-deep/75 border-t">
       <Container className="py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>

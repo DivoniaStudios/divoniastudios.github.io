@@ -19,7 +19,7 @@ export function ServicesContent({ locale, dict }: { locale: Locale; dict: Dictio
         <SkillTree locale={locale} dict={dict} showHeading={false} />
       </div>
 
-      <section className="bg-deep border-line border-y py-24 sm:py-32">
+      <section className="bg-deep/75 border-line border-y py-24 sm:py-32">
         <Container>
           <SectionHeading title={t.processTitle} />
 

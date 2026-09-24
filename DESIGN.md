@@ -40,6 +40,15 @@ görseller `.only-dark` / `.only-light` sınıflarıyla seçilir.
 Tek vurgu rengi kırmızıdır. Oyun görselleri kendi renklerini getirir;
 arayüz yeni renk eklemez.
 
+## Arka plan
+
+Seviye editörü ızgarası: oyun motorlarının sahne düzenleyicisindeki gibi
+48px karolar ve her dört karede bir kesişim işareti (+). `body` zemininde
+duruyor (`--grid-line`, `--grid-plus`); üstte ayrı bir katman yok, bu yüzden
+telefonda kaydırma maliyeti yok. Açılıştaki voksel sahnesi aynı ızgarayı
+shader içinde çiziyor. Koyu tonlu bölümler (`bg-deep/75`) yarı saydam;
+ızgara onların altından da hafifçe görünüyor.
+
 ## Tipografi
 
 - **Başlık:** Bricolage Grotesque, 700-800, sıkı aralık.

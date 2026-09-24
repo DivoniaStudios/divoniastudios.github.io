@@ -85,6 +85,9 @@ uniform vec3  uStar;
 uniform vec3  uTint;
 uniform float uGlow;
 uniform float uVig;
+uniform float uScale;
+uniform vec3  uGridCol;
+uniform float uGridA;
 
 const vec3 GRID = vec3(${GRID_W.toFixed(1)}, ${GRID_H.toFixed(1)}, 4.0);
 const vec3 RED  = vec3(0.925, 0.122, 0.153);
@@ -275,6 +278,23 @@ void main() {
   // Kenar kararması
   col *= 1.0 - uVig * dot(uv * vec2(0.8, 1.0), uv * vec2(0.8, 1.0));
 
+  /*
+   * Seviye editörü ızgarası: sayfanın zemindeki ızgarayla aynı (48px karo,
+   * her 4 karede bir +). CSS pikseline göre, tuvalin çözünürlüğünden
+   * bağımsız; çizgi en az 1 tuval pikseli kalınlığında.
+   */
+  if (!hit) {
+    vec2 css = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uScale;
+    float lw = max(1.0, 1.0 / uScale);
+    vec2 cell = mod(css, 48.0);
+    float line = step(cell.x, lw) + step(cell.y, lw);
+    vec2 q = mod(css + 96.0, 192.0) - 96.0;
+    float plus = step(abs(q.y), 0.5 * lw + 0.5) * step(abs(q.x), 5.5)
+               + step(abs(q.x), 0.5 * lw + 0.5) * step(abs(q.y), 5.5);
+    col = mix(col, uGridCol, clamp(line, 0.0, 1.0) * uGridA);
+    col = mix(col, uGridCol, clamp(plus, 0.0, 1.0) * uGridA * 4.5);
+  }
+
   // Renk derinliği: yalnızca zeminde, Bayer titremesiyle (retro doku).
   // Kalbin yüzleri titremesiz: düz, net renk bloklar.
   if (!hit) {
@@ -398,6 +418,9 @@ export function VoxelHeart({
     const uTint = u("uTint");
     const uGlow = u("uGlow");
     const uVig = u("uVig");
+    const uScale = u("uScale");
+    const uGridCol = u("uGridCol");
+    const uGridA = u("uGridA");
 
     /*
      * Renkler CSS tokenlarından (--void, --scene-frame, --scene-star).
@@ -415,6 +438,9 @@ export function VoxelHeart({
       gl.uniform3fv(uTint, light ? [-0.03, -0.03, -0.018] : [0.035, 0.028, 0.06]);
       gl.uniform1f(uGlow, light ? 0.07 : 0.16);
       gl.uniform1f(uVig, light ? 0.08 : 0.28);
+      // Izgara: sayfa zeminindekiyle aynı renk ve yoğunluk (--grid-line)
+      gl.uniform3fv(uGridCol, hexToRgb(style.getPropertyValue("--ink")));
+      gl.uniform1f(uGridA, light ? 0.075 : 0.06);
     };
     gl.uniform1i(u("uMask"), 0);
 
@@ -469,6 +495,7 @@ export function VoxelHeart({
       canvas.height = h;
       gl.viewport(0, 0, w, h);
       gl.uniform2f(uRes, w, h);
+      gl.uniform1f(uScale, w / rect.width);
       // Metin düzeniyle aynı eşik (TitleStory ve .story-veil: 1024px)
       gl.uniform1f(uNarrow, rect.width < 1024 ? 1 : 0);
       gl.uniform1f(uColors, LEVELS[nextLevel].colors);
