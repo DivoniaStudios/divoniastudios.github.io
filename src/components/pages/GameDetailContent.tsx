@@ -155,8 +155,8 @@ export function GameDetailContent({
                     <img
                       src={character.image}
                       alt={`${character.name}: ${character.role[locale]}`}
-                      width={600}
-                      height={800}
+                      width={282}
+                      height={375}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover object-top"

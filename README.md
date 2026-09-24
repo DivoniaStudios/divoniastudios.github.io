@@ -56,7 +56,7 @@ olmak zorunda; `en.ts` eksik alan bırakırsa derleme hata verir.
 `hasPage: true`; sayfa `/tr/oyunlar/<slug>` adresinde otomatik üretilir.
 
 **Date For Dead karakteri eklemek** → aynı dosyada `characters`. Görsel
-600×800, `public/games/date-for-dead/char-<id>.webp`.
+3:4 oranında, `public/games/date-for-dead/char-<id>.webp`.
 
 **Renk / font** → `src/app/globals.css` başındaki `:root` (gece) ve
 `[data-theme="light"]` (gündüz) blokları; kurallar `DESIGN.md`.

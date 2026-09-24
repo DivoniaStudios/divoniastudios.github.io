@@ -303,8 +303,8 @@ function CardFace({
       <img
         src={character.image}
         alt=""
-        width={600}
-        height={800}
+        width={282}
+        height={375}
         draggable={false}
         decoding="async"
         loading="lazy"
