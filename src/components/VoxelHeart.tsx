@@ -53,14 +53,22 @@ const GRID_H = HEART.length;
  * seviye atlama yalnızca hafif bir keskinleşme olarak hissediliyor.
  */
 const LEVELS = [
-  { pixel: 2, colors: 24 },
-  { pixel: 1.5, colors: 36 },
-  { pixel: 1.25, colors: 64 },
-  { pixel: 1, colors: 128 },
+  { colors: 24 },
+  { colors: 36 },
+  { colors: 64 },
+  { colors: 128 },
 ];
 
+/**
+ * Tuvalin piksel boyutu (cihaz pikseli), tüm seviyelerde aynı. Seviyeler
+ * önceden çözünürlüğü de değiştiriyordu; her geçişte tuval yeniden
+ * kuruluyor ve kaydırmanın ortasında tek tük donmalar oluyordu. Fark gözle
+ * zaten seçilmiyordu; seviye artık yalnızca zemindeki renk derinliğinde.
+ */
+const PIXEL = 1.5;
+
 /** Tuvalin en fazla piksel sayısı: ızgara yürütme piksel başına pahalı */
-const MAX_PIXELS_DESKTOP = 2_600_000;
+const MAX_PIXELS_DESKTOP = 2_000_000;
 const MAX_PIXELS_MOBILE = 900_000;
 
 const VERT = `
@@ -422,25 +430,18 @@ export function VoxelHeart({
     const uGridCol = u("uGridCol");
     const uGridA = u("uGridA");
 
-    /*
-     * Renkler CSS tokenlarından (--void, --scene-frame, --scene-star).
-     * Gündüzde zemin açık, çerçeve vokselleri koyu: kalp logonun orijinal
-     * renkleriyle görünüyor. Açık zeminde kenar kararması ve kırmızı hale
-     * hafifletiliyor, yoksa zemin grileşiyordu.
-     */
+    /** Renkler CSS tokenlarından (--void, --scene-frame, --scene-star, --ink). */
     const readPalette = () => {
       const style = getComputedStyle(document.documentElement);
-      const bg = hexToRgb(style.getPropertyValue("--void"));
-      const light = (bg[0] + bg[1] + bg[2]) / 3 > 0.5;
-      gl.uniform3fv(uBg, bg);
+      gl.uniform3fv(uBg, hexToRgb(style.getPropertyValue("--void")));
       gl.uniform3fv(uFrame, hexToRgb(style.getPropertyValue("--scene-frame")));
       gl.uniform3fv(uStar, hexToRgb(style.getPropertyValue("--scene-star")));
-      gl.uniform3fv(uTint, light ? [-0.03, -0.03, -0.018] : [0.035, 0.028, 0.06]);
-      gl.uniform1f(uGlow, light ? 0.07 : 0.16);
-      gl.uniform1f(uVig, light ? 0.08 : 0.28);
+      gl.uniform3fv(uTint, [0.035, 0.028, 0.06]);
+      gl.uniform1f(uGlow, 0.16);
+      gl.uniform1f(uVig, 0.28);
       // Izgara: sayfa zeminindekiyle aynı renk ve yoğunluk (--grid-line)
       gl.uniform3fv(uGridCol, hexToRgb(style.getPropertyValue("--ink")));
-      gl.uniform1f(uGridA, light ? 0.055 : 0.045);
+      gl.uniform1f(uGridA, 0.045);
     };
     gl.uniform1i(u("uMask"), 0);
 
@@ -449,6 +450,14 @@ export function VoxelHeart({
     let level = -1;
     let cssW = 0;
     let cssH = 0;
+    /*
+     * Dinamik çözünürlük (oyunlardaki gibi): kareler yavaşlarsa tuvalin
+     * çözünürlüğü kademeli düşüyor (en fazla yarıya). Zayıf ekran kartında
+     * ya da pil tasarrufunda kaydırma takılmasın diye. Yalnızca düşüyor,
+     * geri yükselmiyor; yükselip düşmek titreşim gibi görünürdü.
+     */
+    let quality = 1;
+    let appliedQuality = 1;
     // Dokunmatik cihaz: adres çubuğu yalnızca yüksekliği oynatıyor
     const touch = window.matchMedia("(pointer: coarse)").matches;
 
@@ -468,9 +477,13 @@ export function VoxelHeart({
        * çiziliyor, kaydırma takılıyordu). Tuval CSS ile hafifçe esniyor;
        * iOS'ta 100lvh sayesinde zaten esnemiyor.
        */
+      if (nextLevel !== level) {
+        level = nextLevel;
+        gl.uniform1f(uColors, LEVELS[nextLevel].colors);
+      }
       if (
         touch &&
-        nextLevel === level &&
+        quality === appliedQuality &&
         Math.round(rect.width) === cssW &&
         Math.abs(rect.height - cssH) / cssH < 0.25
       ) {
@@ -479,16 +492,17 @@ export function VoxelHeart({
       // Cihaz çözünürlüğü (en fazla 2x), seviyenin piksel boyutu ve piksel
       // bütçesiyle sınırlanıyor.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      let scale = dpr / LEVELS[nextLevel].pixel;
+      // Retina olmayan ekranda (dpr 1) tam çözünürlük; orada 1,5 bulanık kalıyor
+      let scale = (dpr / Math.min(PIXEL, dpr)) * quality;
       const budget = rect.width < 768 ? MAX_PIXELS_MOBILE : MAX_PIXELS_DESKTOP;
       const raw = rect.width * rect.height * scale * scale;
       if (raw > budget) scale *= Math.sqrt(budget / raw);
       const w = Math.max(1, Math.round(rect.width * scale));
       const h = Math.max(1, Math.round(rect.height * scale));
-      if (w === width && h === height && nextLevel === level) return false;
+      if (w === width && h === height && quality === appliedQuality) return false;
+      appliedQuality = quality;
       width = w;
       height = h;
-      level = nextLevel;
       cssW = Math.round(rect.width);
       cssH = rect.height;
       canvas.width = w;
@@ -498,17 +512,18 @@ export function VoxelHeart({
       gl.uniform1f(uScale, w / rect.width);
       // Metin düzeniyle aynı eşik (TitleStory ve .story-veil: 1024px)
       gl.uniform1f(uNarrow, rect.width < 1024 ? 1 : 0);
-      gl.uniform1f(uColors, LEVELS[nextLevel].colors);
       return true;
     };
 
     let ptrX = 0;
     let ptrY = 0;
+    let lastPointer = 0;
     let sx = 0;
     let sy = 0;
     const onPointer = (event: PointerEvent) => {
       ptrX = event.clientX / window.innerWidth - 0.5;
       ptrY = event.clientY / window.innerHeight - 0.5;
+      lastPointer = performance.now();
     };
 
     let shown = progressRef.current ?? 0;
@@ -531,15 +546,57 @@ export function VoxelHeart({
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
+    let lastTick = 0;
+    let tick = 0;
+    let drewLast = false;
+    let samples: number[] = [];
+
     const render = (now: number) => {
       frame = 0;
       const rect = canvas.getBoundingClientRect();
       const visible = rect.bottom > 0 && rect.top < window.innerHeight;
       if (!visible || document.hidden) {
         running = false;
+        lastTick = 0;
         return;
       }
-      draw(now, Math.min(1.2, (now - start) / 1700));
+
+      /*
+       * Kare süresi ölçümü: ekran kartı yetişemiyorsa rAF aralığı uzuyor.
+       * Yalnızca çizilen karelerin ardından ölçülüyor; boştaki atlanan
+       * kareler sonucu olduğundan iyi gösterirdi ve yavaş cihaz ancak
+       * kaydırma başlayınca, yani en kötü anda fark edilirdi.
+       */
+      if (lastTick && drewLast) {
+        const dt = now - lastTick;
+        if (dt < 250) samples.push(dt);
+        // Kısa pencere (20 kare): yavaş cihaz, açılış animasyonu sürerken,
+        // kullanıcı kaydırmaya başlamadan tespit edilsin. Adımlar büyük
+        // (×0,7), çünkü her adım tuvali yeniden kuruyor; iki adımda taban.
+        if (samples.length >= 20) {
+          samples.sort((a, b) => a - b);
+          const median = samples[10];
+          if (median > 21 && quality > 0.5) {
+            quality = Math.max(0.5, quality * 0.7);
+          }
+          samples = [];
+        }
+      }
+      lastTick = now;
+
+      /*
+       * Kaydırma, fare ya da açılış animasyonu yoksa kalp yalnızca atıyor;
+       * o zaman her iki karede bir çiziliyor (30 FPS). Yavaş bir kalp
+       * atışında fark edilmiyor, ekran kartının yükü yarıya iniyor.
+       */
+      const intro = Math.min(1.2, (now - start) / 1700);
+      const target = Math.min(1, Math.max(0, progressRef.current ?? 0));
+      const active =
+        Math.abs(target - shown) > 0.0005 || now - lastPointer < 500 || intro < 1.2;
+      tick++;
+      drewLast = active || tick % 2 === 0;
+      if (drewLast) draw(now, intro);
+
       frame = requestAnimationFrame(render);
     };
 
@@ -567,15 +624,6 @@ export function VoxelHeart({
     readPalette();
     canvas.classList.add("is-live");
 
-    // Tema değişince (buton ya da sistem ayarı) renkleri yeniden oku
-    const themeObserver = new MutationObserver(() => {
-      readPalette();
-      draw(performance.now(), reduced ? 1.2 : Math.min(1.2, (performance.now() - start) / 1700));
-    });
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
 
     if (reduced) {
       // Tek kare: kalp kurulmuş, hareketsiz
@@ -589,7 +637,6 @@ export function VoxelHeart({
       window.addEventListener("resize", onResize);
       return () => {
         window.removeEventListener("resize", onResize);
-        themeObserver.disconnect();
         release();
       };
     }
@@ -609,7 +656,6 @@ export function VoxelHeart({
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", kick);
       if (frame) cancelAnimationFrame(frame);
-      themeObserver.disconnect();
       release();
     };
   }, [progressRef]);

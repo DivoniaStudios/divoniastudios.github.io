@@ -30,12 +30,8 @@ DURAKLATILDI, DEVAM?).
 | `--paper` | `#EFE8DA` | Yalnızca oyunun diyalog kutusu |
 | `--paper-ink` | `#2A2530` | Diyalog kutusundaki metin (12.3:1) |
 
-İki tema: **gece** (varsayılan) ve **gündüz**. İlk açılışta sistem ayarı
-izlenir, üst menüdeki butonla değiştirilir, tercih tarayıcıda saklanır.
-Gündüz tokenları `globals.css` içinde `[data-theme="light"]` bloğunda;
-yukarıdaki tablo gece değerleri. Gündüz modunda voksel kalp logonun orijinal
-renkleriyle çizilir (siyah çerçeve, kırmızı gövde). Temaya göre değişen
-görseller `.only-dark` / `.only-light` sınıflarıyla seçilir.
+Tek tema: gece. Oyunun gece sahnesi ve logo kırmızısı koyu zeminde en
+iyi okunuyor; gündüz modu bilinçli olarak yok.
 
 Tek vurgu rengi kırmızıdır. Oyun görselleri kendi renklerini getirir;
 arayüz yeni renk eklemez.

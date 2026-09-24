@@ -58,8 +58,7 @@ olmak zorunda; `en.ts` eksik alan bırakırsa derleme hata verir.
 **Date For Dead karakteri eklemek** → aynı dosyada `characters`. Görsel
 3:4 oranında, `public/games/date-for-dead/char-<id>.webp`.
 
-**Renk / font** → `src/app/globals.css` başındaki `:root` (gece) ve
-`[data-theme="light"]` (gündüz) blokları; kurallar `DESIGN.md`.
+**Renk / font** → `src/app/globals.css` başındaki `:root`; kurallar `DESIGN.md`.
 
 ## Voksel kalp
 
@@ -67,7 +66,7 @@ olmak zorunda; `en.ts` eksik alan bırakırsa derleme hata verir.
 `#` kırmızı gövde, `o` açık çerçeve) üç boyutlu vokseller olarak çizer.
 Tuval cihaz çözünürlüğüne yakın çizilir (piksel bütçesiyle sınırlı);
 seviye ilerledikçe hafifçe keskinleşir (`LEVELS`). Renkler CSS
-tokenlarından okunur, tema değişince sahne de değişir. WebGL yoksa CSS
+tokenlarından okunur. WebGL yoksa CSS
 degradesi görünür, hareket azaltmada tek kare çizilir.
 
 ## Kısıtlar

@@ -29,8 +29,6 @@ export const tr = {
     paused: "DURAKLATILDI",
     resume: "Devam et",
     langLabel: "Dil",
-    themeToLight: "Gündüz moduna geç",
-    themeToDark: "Gece moduna geç",
   },
   hud: {
     level: "SEVİYE",

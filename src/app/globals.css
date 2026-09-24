@@ -2,10 +2,7 @@
 
 /* ---------------------------------------------------------------
    Tokenlar. Kuralların açıklaması DESIGN.md içinde.
-   İki tema: gece (varsayılan) ve gündüz. Tema <html data-theme> ile
-   seçiliyor; layout'taki küçük betik bunu ilk boyamadan önce yazıyor
-   (kayıtlı tercih, yoksa sistem ayarı). JS kapalıysa sistem ayarı
-   @media ile uygulanıyor. Tek vurgu: logo kırmızısı.
+   Tek tema: gece. Tek vurgu: logo kırmızısı.
    --------------------------------------------------------------- */
 
 :root {
@@ -38,9 +35,6 @@
   --grid-line: rgb(241 236 244 / 0.045);
   --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(241,236,244)' fill-opacity='0.24' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
 
-  /* Temaya göre değişen görseller (logo, kalp işareti) */
-  --show-dark: block;
-  --show-light: none;
 
   /* Yalnızca Date For Dead'in diyalog kutusu (oyunun kendi arayüzü) */
   --paper: #efe8da;
@@ -50,54 +44,6 @@
 
   /* 8-bit çentik ölçüsü */
   --n: 4px;
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --void: #f5f2f7;
-  --deep: #ece8f0;
-  --panel: #fcfbfd;
-  --panel-2: #efebf3;
-  --ink: #17141f;
-  --muted: #595366;
-  --faint: #655e75;
-  --line: rgb(23 20 31 / 0.1);
-  --line-strong: rgb(23 20 31 / 0.2);
-  --accent-text: #c4121a;
-  --accent-glow: rgb(236 31 39 / 0.13);
-  --px-shadow: #17141f;
-  /* Gündüz kalp, logonun orijinal renkleriyle: siyah çerçeve, kırmızı gövde */
-  --scene-frame: #221e2b;
-  --scene-star: #9a93ad;
-  --grid-line: rgb(23 20 31 / 0.055);
-  --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(23,20,31)' fill-opacity='0.26' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
-  --show-dark: none;
-  --show-light: block;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    color-scheme: light;
-    --void: #f5f2f7;
-    --deep: #ece8f0;
-    --panel: #fcfbfd;
-    --panel-2: #efebf3;
-    --ink: #17141f;
-    --muted: #595366;
-    --faint: #655e75;
-    --line: rgb(23 20 31 / 0.1);
-    --line-strong: rgb(23 20 31 / 0.2);
-    --accent-text: #c4121a;
-    --accent-glow: rgb(236 31 39 / 0.13);
-    --px-shadow: #17141f;
-    /* Gündüz kalp, logonun orijinal renkleriyle: siyah çerçeve, kırmızı gövde */
-    --scene-frame: #221e2b;
-    --scene-star: #9a93ad;
-    --grid-line: rgb(23 20 31 / 0.055);
-    --grid-plus: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><path fill='rgb(23,20,31)' fill-opacity='0.26' d='M3 8h11v1H3zM8 3h1v11H8z'/></svg>");
-    --show-dark: none;
-    --show-light: block;
-}
 }
 
 @theme inline {
@@ -314,9 +260,6 @@
     line-height: 1.1;
   }
 
-  /* Temaya göre görsel: gece / gündüz sürümü */
-  .only-dark { display: var(--show-dark); }
-  .only-light { display: var(--show-light); }
 
   /* Metin içi bağlantı: altı çizgi kırmızı ve kalın */
   .link-px {

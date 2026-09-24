@@ -26,8 +26,6 @@ export const en: Dictionary = {
     paused: "PAUSED",
     resume: "Resume",
     langLabel: "Language",
-    themeToLight: "Switch to day mode",
-    themeToDark: "Switch to night mode",
   },
   hud: {
     level: "LEVEL",

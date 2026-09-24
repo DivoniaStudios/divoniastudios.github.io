@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { List, X, CaretRight } from "@phosphor-icons/react";
 import { Logo } from "./Logo";
 import { Container } from "./Container";
-import { ThemeToggle } from "./ThemeToggle";
 import { locales, type Locale } from "@/i18n/config";
 import { gamePath, pathFor, parsePath, type PageKey } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -106,7 +105,6 @@ export function Header({
 
         <div className="flex items-center gap-2 sm:gap-3">
           <LocaleSwitch locale={locale} label={nav.langLabel} />
-          <ThemeToggle toLight={nav.themeToLight} toDark={nav.themeToDark} />
 
           {/* Görünürlük sarmalayıcıda: .btn-px kendi display değerini taşıyor
               ve aynı öğedeki hidden/md:hidden sınıflarını eziyor. */}
