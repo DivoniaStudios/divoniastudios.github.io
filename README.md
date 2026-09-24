@@ -71,9 +71,8 @@ degradesi görünür, hareket azaltmada tek kare çizilir.
 
 ## Kısıtlar
 
-Site statik; sunucu tarafı kod yok. İletişim formu mesajları Web3Forms ile
-doğrudan contact@divoniastudios.com'a gönderir; anahtar
-`src/data/site.ts` içinde (`WEB3FORMS_ACCESS_KEY`). Anahtar boşsa ya da
-gönderim başarısız olursa form mesajı hazırlayıp ziyaretçinin Gmail,
-Outlook, e-posta uygulaması ya da kopyalama ile göndermesini sağlar
-(`ContactForm.tsx`).
+Site statik; sunucu tarafı kod yok. İletişim formu mesajı kendisi
+göndermez: doğrulayıp hazırlar, ziyaretçi Gmail, Outlook, kendi e-posta
+uygulaması ya da kopyalama ile gönderir (`ContactForm.tsx`). Yalnızca
+mailto kullanılsaydı Windows'ta çoğu kişide hiçbir şey açılmazdı. Gerçek
+gönderim istenirse Formspree / Web3Forms gibi bir servis eklenmeli.
