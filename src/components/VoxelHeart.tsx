@@ -440,7 +440,7 @@ export function VoxelHeart({
       gl.uniform1f(uVig, light ? 0.08 : 0.28);
       // Izgara: sayfa zeminindekiyle aynı renk ve yoğunluk (--grid-line)
       gl.uniform3fv(uGridCol, hexToRgb(style.getPropertyValue("--ink")));
-      gl.uniform1f(uGridA, light ? 0.075 : 0.06);
+      gl.uniform1f(uGridA, light ? 0.055 : 0.045);
     };
     gl.uniform1i(u("uMask"), 0);
 
