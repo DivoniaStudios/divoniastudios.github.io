@@ -47,12 +47,12 @@ export const tr = {
     panels: [
       {
         title: "Kendi oyunumuz: Date For Dead",
-        text: "Canavarlarla dolu, hikâye odaklı bir dating sim. Yakında Steam'de, Erken Erişim'de.",
+        text: "Seçimlerin ilişkileri şekillendirdiği hikâye odaklı bir dating sim. Victoria’nın aradığı şey yeni bir aşk değil; aşkı geri getirmenin bir yolu.",
         link: "Oyunu gör",
       },
       {
         title: "Markalar için oyun",
-        text: "KidZania İstanbul'daki Logo Yazılım Geliştirme Merkezi'nin PC oyunu bizden. Oyunu markanın mekânına ve amacına göre tasarlıyoruz.",
+        text: "KidZania İstanbul’daki Logo Yazılım Geliştirme Merkezi için bir PC oyunu geliştirdik; çocuklar yazılım dünyasını oynayarak keşfediyor. Her oyunu markanın mekânına ve amacına göre tasarlıyoruz.",
         link: "Hizmetlere bak",
       },
       {

@@ -44,12 +44,12 @@ export const en: Dictionary = {
     panels: [
       {
         title: "Our own game: Date For Dead",
-        text: "A narrative-driven dating sim full of monsters. Coming soon to Steam Early Access.",
+        text: "A narrative-driven dating sim where your choices shape your relationships. What Victoria is looking for isn’t a new love; it’s a way to bring love back.",
         link: "See the game",
       },
       {
         title: "Games for brands",
-        text: "The PC game at Logo's Software Development Center in KidZania Istanbul is ours. We design each game around the brand's space and goal.",
+        text: "We developed a PC game for Logo’s Software Development Center at KidZania Istanbul, where kids discover the world of software by playing. We design every game around the brand’s space and goal.",
         link: "See services",
       },
       {
