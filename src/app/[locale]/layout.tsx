@@ -68,8 +68,15 @@ export async function generateMetadata({
       template: `%s · ${dict.meta.siteName}`,
     },
     description: dict.meta.description,
+    // Google arama sonucundaki ikon için kare ve 48'in katı boyut şart;
+    // bulamazsa /favicon.ico'ya bakar. İkisi de burada.
     icons: {
-      icon: "/brand/favicon.png",
+      icon: [
+        { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+        { url: "/brand/icon-48.png", sizes: "48x48", type: "image/png" },
+        { url: "/brand/icon-96.png", sizes: "96x96", type: "image/png" },
+        { url: "/brand/icon-192.png", sizes: "192x192", type: "image/png" },
+      ],
       apple: "/brand/apple-touch-icon.png",
     },
     alternates: {
