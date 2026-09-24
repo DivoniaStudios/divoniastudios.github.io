@@ -22,7 +22,7 @@ const placement: Record<(typeof phones)[number]["pos"], string> = {
 export function PhoneFan({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`group relative overflow-hidden bg-[radial-gradient(ellipse_60%_70%_at_50%_85%,rgb(58_167_223/0.28),transparent_70%),radial-gradient(circle_at_1px_1px,rgb(241_236_244/0.07)_1px,transparent_0)] bg-[length:auto,14px_14px] ${className}`}
+      className={`group relative overflow-hidden bg-[radial-gradient(ellipse_60%_70%_at_50%_85%,rgb(58_167_223/0.28),transparent_70%),radial-gradient(circle_at_1px_1px,var(--line-strong)_1px,transparent_0)] bg-[length:auto,14px_14px] ${className}`}
     >
       {phones.map(({ src, pos }) => (
         <div

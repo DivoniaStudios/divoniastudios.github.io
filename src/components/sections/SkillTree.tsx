@@ -55,13 +55,22 @@ export function SkillTree({
         <div className="skill-tree mt-16 flex flex-col items-center" data-reveal>
           {/* Kök: stüdyonun piksel kalbi */}
           <div className="tree-node flex flex-col items-center" style={{ ["--d" as string]: "0s" }}>
+            {/* Temaya göre: gece açık çerçeveli, gündüz siyah çerçeveli kalp */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/mark.png"
               alt=""
               width={64}
               height={64}
-              className="h-16 w-16 [image-rendering:pixelated]"
+              className="only-dark h-16 w-16 [image-rendering:pixelated]"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/mark-on-light.png"
+              alt=""
+              width={64}
+              height={64}
+              className="only-light h-16 w-16 [image-rendering:pixelated]"
             />
           </div>
           <span className="tree-v h-12" style={{ ["--d" as string]: "0.2s" }} aria-hidden />

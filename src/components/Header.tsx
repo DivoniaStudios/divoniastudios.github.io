@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { List, X, CaretRight } from "@phosphor-icons/react";
 import { Logo } from "./Logo";
 import { Container } from "./Container";
+import { ThemeToggle } from "./ThemeToggle";
 import { locales, type Locale } from "@/i18n/config";
 import { gamePath, pathFor, parsePath, type PageKey } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -101,8 +102,9 @@ export function Header({
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <LocaleSwitch locale={locale} label={nav.langLabel} />
+          <ThemeToggle toLight={nav.themeToLight} toDark={nav.themeToDark} />
 
           {/* Görünürlük sarmalayıcıda: .btn-px kendi display değerini taşıyor
               ve aynı öğedeki hidden/md:hidden sınıflarını eziyor. */}
@@ -136,7 +138,7 @@ export function Header({
           className="pause-menu bg-void fixed inset-x-0 top-16 bottom-0 md:hidden"
         >
           <Container className="flex h-full flex-col pt-10 pb-10">
-            <p className="hud text-accent-text !text-base">{nav.paused}</p>
+            <p className="hud text-accent-text !font-pixel !text-lg">{nav.paused}</p>
             <nav aria-label={nav.mainNav}>
             <ul className="mt-8 flex flex-col gap-1">
               {[...navKeys].map((key, index) => (

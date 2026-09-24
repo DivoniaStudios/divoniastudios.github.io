@@ -74,7 +74,7 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
 
     // Telefonda paneller ekranın çoğunu kaplıyor; iki panel aynı anda
     // okunmasın diye durma payı büyük, geçiş kısa.
-    const narrow = window.matchMedia("(max-width: 860px)");
+    const narrow = window.matchMedia("(max-width: 1023px)");
     let hold = 0.22;
     let fade = 0.6;
     const tune = () => {
@@ -143,11 +143,11 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
         <VoxelHeart progressRef={progressRef} />
         <div className="story-veil" aria-hidden="true" />
 
-        <Container className="relative z-10 flex h-full items-end pb-28 md:items-center md:pb-0">
+        <Container className="relative z-10 flex h-full items-end pb-28 lg:items-center lg:pb-0">
           <div ref={panelsRef} className="story-panels grid w-full">
             {/* Panel 0: karşılama */}
-            <div data-panel className="story-panel max-w-3xl">
-              <h1 className="text-[2.6rem] leading-[1.02] font-extrabold sm:text-6xl lg:text-7xl">
+            <div data-panel className="story-panel max-w-3xl lg:max-w-[56%] xl:max-w-3xl">
+              <h1 className="text-[2.6rem] leading-[1.02] font-extrabold sm:text-6xl xl:text-7xl">
                 {words.map((word, index) => (
                   <Fragment key={index}>
                     {index > 0 && " "}
@@ -195,7 +195,7 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
 
             {/* Panel 1-3: stüdyonun üç işi */}
             {hero.panels.map((panel, index) => (
-              <div key={panel.title} data-panel className="story-panel max-w-xl">
+              <div key={panel.title} data-panel className="story-panel max-w-xl lg:max-w-[52%] xl:max-w-xl">
                 <p className="hud text-accent-text">
                   {dict.hud.level} {index + 2}
                 </p>
@@ -226,7 +226,7 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
           <Container className="flex items-end gap-5">
             <div className="shrink-0">
               <p className="hud text-faint">{dict.hud.level}</p>
-              <p className="hud text-ink mt-1.5 !text-lg">
+              <p className="hud text-ink mt-1.5 !font-pixel !text-lg">
                 <span ref={levelRef}>1/4</span>
               </p>
             </div>
@@ -237,7 +237,7 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
             </div>
             <div className="shrink-0 text-right">
               <p className="hud text-faint">{dict.hud.progress}</p>
-              <p className="hud text-ink mt-1.5 !text-lg">
+              <p className="hud text-ink mt-1.5 !font-pixel !text-lg">
                 <span ref={percentRef}>000%</span>
               </p>
             </div>

@@ -77,12 +77,17 @@ uniform float uProg;
 uniform float uIntro;
 uniform float uColors;
 uniform vec2  uPtr;
+uniform float uNarrow;
 uniform sampler2D uMask;
+uniform vec3  uBg;
+uniform vec3  uFrame;
+uniform vec3  uStar;
+uniform vec3  uTint;
+uniform float uGlow;
+uniform float uVig;
 
 const vec3 GRID = vec3(${GRID_W.toFixed(1)}, ${GRID_H.toFixed(1)}, 4.0);
 const vec3 RED  = vec3(0.925, 0.122, 0.153);
-const vec3 INK  = vec3(0.945, 0.925, 0.957);
-const vec3 VOID = vec3(0.043, 0.039, 0.063);
 
 float hash(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
@@ -151,32 +156,43 @@ void main() {
   vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
 
   /*
-   * Geniş ekranda metin solda, kalp sağda. Telefonda metin alt yarıda,
-   * kalp üstte ve biraz daha küçük.
+   * Geniş ekranda (≥1024px) metin solda, kalp sağda: kalp ekran
+   * genişliğinin ~%36'sını kaplıyor ve sağ kenara yaslanıyor, böylece
+   * 1024px'lik bir ekranda da başlığa binmiyor. Daha dar ekranlarda metin
+   * alt yarıda, kalp üstte ve ekran genişliğinin ~%75'i kadar.
+   *
+   * 7.6: kalbin genişliği (20 voksel) ile izdüşüm katsayısının çarpımı;
+   * voksel boyutu × 7.6 = ekrandaki genişlik (uv birimi).
    */
   float en = uRes.x / uRes.y;
-  float narrow = 1.0 - smoothstep(0.75, 1.25, en);
+  float narrow = uNarrow;
+  float halfW = 0.5 * en;
+  float vsWide = clamp(en * 0.36 / 7.6, 0.05, 0.084);
+  // Dar ama yatay ekranda (küçük tablet, yatay telefon) yükseklik kısıtlı:
+  // kalp biraz küçülüp yukarı çıkıyor ki başlığa değmesin.
+  float landscape = step(1.0, en);
+  float vsNarrow = clamp(en * 0.75 / 7.6, 0.03, 0.047) * mix(1.0, 0.8, landscape);
+  float vsBase = mix(vsWide, vsNarrow, narrow);
   vec2 suv = uv;
-  suv.x -= mix(0.47, 0.0, narrow);
-  suv.y -= narrow * 0.25;
+  suv.x -= mix(halfW - 3.8 * vsWide - 0.06 * halfW, 0.0, narrow);
+  suv.y -= narrow * mix(0.25, 0.3, landscape);
 
   // Zemin: gece, altta hafif mor ışık, kalbin arkasında kırmızı hale
-  vec3 col = VOID + vec3(0.035, 0.028, 0.06) * smoothstep(0.6, -0.7, uv.y);
+  vec3 col = uBg + uTint * smoothstep(0.6, -0.7, uv.y);
   float halo = exp(-dot(suv, suv) * 4.2);
-  col += RED * halo * 0.16;
+  col += RED * halo * uGlow;
 
   // Piksel yıldızlar: çözünürlükten bağımsız, ekran yüksekliğine göre
   // sabit bir ızgarada (~200 satır); her yıldız birkaç piksellik bir blok.
   vec2 cell2 = floor(gl_FragCoord.xy / (uRes.y / 200.0));
   float star = step(0.9965, hash2(cell2));
   float tw = 0.5 + 0.5 * sin(uTime * 2.0 + hash2(cell2 + 3.1) * 40.0);
-  col += vec3(0.75, 0.72, 0.85) * star * tw * (1.0 - halo) * 0.8;
+  col = mix(col, uStar, star * tw * (1.0 - halo) * 0.8);
 
   // Kalp atışı: "lub-dub"
   float ph = mod(uTime, 1.15);
   float beat = exp(-ph * 10.0) + 0.55 * exp(-max(ph - 0.24, 0.0) * 10.0) * step(0.24, ph);
-  // Telefonda kalp ekran genişliğinin ~3/4'ü: başlığın üstünde, taşmadan
-  float vs = 0.084 * (1.0 + 0.03 * beat * uIntro) * mix(1.0, 0.56, narrow);
+  float vs = vsBase * (1.0 + 0.03 * beat * uIntro);
 
   // Nesne dönüşü (ışına tersi uygulanıyor)
   // Seviye 2'de ~30° sağa, 3'te ~30° sola, 4'te yeniden önden; hiçbir
@@ -242,7 +258,7 @@ void main() {
     float dif = max(dot(nw, L), 0.0);
     // Kameraya bakan yüz en parlak: kalp önden logonun rengini koruyor
     float front = max(nw.z, 0.0);
-    vec3 base = hitType > 1.5 ? RED : INK;
+    vec3 base = hitType > 1.5 ? RED : uFrame;
     vec3 sh = base * (0.3 + 0.45 * dif + 0.35 * front);
     // Arka kenar ışığı: kırmızı zeminde siluet okunsun
     float rim = pow(1.0 - max(dot(nw, vec3(0.0, 0.0, 1.0)), 0.0), 3.0);
@@ -257,7 +273,7 @@ void main() {
   }
 
   // Kenar kararması
-  col *= 1.0 - 0.28 * dot(uv * vec2(0.8, 1.0), uv * vec2(0.8, 1.0));
+  col *= 1.0 - uVig * dot(uv * vec2(0.8, 1.0), uv * vec2(0.8, 1.0));
 
   // Renk derinliği: yalnızca zeminde, Bayer titremesiyle (retro doku).
   // Kalbin yüzleri titremesiz: düz, net renk bloklar.
@@ -281,6 +297,17 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
     return null;
   }
   return shader;
+}
+
+type RGB = [number, number, number];
+
+/** "#a1b2c3" → [0..1, 0..1, 0..1]. Beklenmedik biçimde siyaha düşer. */
+function hexToRgb(value: string): RGB {
+  const hex = value.trim().replace("#", "");
+  if (hex.length !== 6) return [0, 0, 0];
+  const n = parseInt(hex, 16);
+  if (Number.isNaN(n)) return [0, 0, 0];
+  return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
 }
 
 function maskData(): Uint8Array {
@@ -364,6 +391,31 @@ export function VoxelHeart({
     const uIntro = u("uIntro");
     const uColors = u("uColors");
     const uPtr = u("uPtr");
+    const uNarrow = u("uNarrow");
+    const uBg = u("uBg");
+    const uFrame = u("uFrame");
+    const uStar = u("uStar");
+    const uTint = u("uTint");
+    const uGlow = u("uGlow");
+    const uVig = u("uVig");
+
+    /*
+     * Renkler CSS tokenlarından (--void, --scene-frame, --scene-star).
+     * Gündüzde zemin açık, çerçeve vokselleri koyu: kalp logonun orijinal
+     * renkleriyle görünüyor. Açık zeminde kenar kararması ve kırmızı hale
+     * hafifletiliyor, yoksa zemin grileşiyordu.
+     */
+    const readPalette = () => {
+      const style = getComputedStyle(document.documentElement);
+      const bg = hexToRgb(style.getPropertyValue("--void"));
+      const light = (bg[0] + bg[1] + bg[2]) / 3 > 0.5;
+      gl.uniform3fv(uBg, bg);
+      gl.uniform3fv(uFrame, hexToRgb(style.getPropertyValue("--scene-frame")));
+      gl.uniform3fv(uStar, hexToRgb(style.getPropertyValue("--scene-star")));
+      gl.uniform3fv(uTint, light ? [-0.03, -0.03, -0.018] : [0.035, 0.028, 0.06]);
+      gl.uniform1f(uGlow, light ? 0.07 : 0.16);
+      gl.uniform1f(uVig, light ? 0.08 : 0.28);
+    };
     gl.uniform1i(u("uMask"), 0);
 
     let width = 0;
@@ -395,6 +447,8 @@ export function VoxelHeart({
       canvas.height = h;
       gl.viewport(0, 0, w, h);
       gl.uniform2f(uRes, w, h);
+      // Metin düzeniyle aynı eşik (TitleStory ve .story-veil: 1024px)
+      gl.uniform1f(uNarrow, rect.width < 1024 ? 1 : 0);
       gl.uniform1f(uColors, LEVELS[nextLevel].colors);
     };
 
@@ -460,7 +514,18 @@ export function VoxelHeart({
       gl.deleteShader(fs);
     };
 
+    readPalette();
     canvas.classList.add("is-live");
+
+    // Tema değişince (buton ya da sistem ayarı) renkleri yeniden oku
+    const themeObserver = new MutationObserver(() => {
+      readPalette();
+      draw(performance.now(), reduced ? 1.2 : Math.min(1.2, (performance.now() - start) / 1700));
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     if (reduced) {
       // Tek kare: kalp kurulmuş, hareketsiz
@@ -473,6 +538,7 @@ export function VoxelHeart({
       window.addEventListener("resize", onResize);
       return () => {
         window.removeEventListener("resize", onResize);
+        themeObserver.disconnect();
         release();
       };
     }
@@ -492,6 +558,7 @@ export function VoxelHeart({
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", kick);
       if (frame) cancelAnimationFrame(frame);
+      themeObserver.disconnect();
       release();
     };
   }, [progressRef]);

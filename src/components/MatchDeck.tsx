@@ -189,7 +189,7 @@ export function MatchDeck({
               <button
                 type="button"
                 onClick={restart}
-                className="font-pixel mt-4 inline-flex items-center gap-1.5 py-2 text-sm underline decoration-2 underline-offset-4"
+                className="font-display mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold underline decoration-2 underline-offset-4"
                 style={{ color: "var(--paper-muted)" }}
               >
                 <ArrowCounterClockwise size={14} weight="bold" aria-hidden />
@@ -234,7 +234,7 @@ export function MatchDeck({
           {popKey > 0 && !done && (
             <p
               key={popKey}
-              className="match-pop font-pixel pointer-events-none absolute top-1/3 left-1/2 z-20 flex items-center gap-2 bg-[#2a2530] px-4 py-2 text-base font-semibold whitespace-nowrap text-white"
+              className="match-pop font-display pointer-events-none absolute top-1/3 left-1/2 z-20 flex items-center gap-2 bg-[#2a2530] px-4 py-2 text-base font-semibold whitespace-nowrap text-white"
               aria-hidden
             >
               <Heart size={18} weight="fill" className="text-accent" />

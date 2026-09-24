@@ -51,7 +51,7 @@ export function GameDetailContent({
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(90deg,rgb(11_10_16/0.94)_0%,rgb(11_10_16/0.7)_42%,rgb(11_10_16/0.1)_75%),linear-gradient(0deg,rgb(11_10_16)_0%,transparent_45%)]"
+          className="absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_srgb,var(--void)_94%,transparent)_0%,color-mix(in_srgb,var(--void)_72%,transparent)_42%,color-mix(in_srgb,var(--void)_10%,transparent)_75%),linear-gradient(0deg,var(--void)_0%,transparent_45%)]"
         />
         <Container className="relative pt-32 pb-16 sm:pb-24">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -104,7 +104,7 @@ export function GameDetailContent({
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-45"
             />
-            <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,rgb(11_10_16/0.85),rgb(11_10_16/0.2)_70%)]" />
+            <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,color-mix(in_srgb,var(--void)_85%,transparent),color-mix(in_srgb,var(--void)_20%,transparent)_70%)]" />
             <div className="relative px-4 pt-40 pb-6 sm:px-10 sm:pt-64 sm:pb-10">
               <DialogueBox
                 speaker={t.speaker}

@@ -34,9 +34,19 @@ const pixelify = Pixelify_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0b0a10",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0b0a10" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f2f7" },
+  ],
+  colorScheme: "dark light",
 };
+
+/**
+ * Tema, sayfa boyanmadan önce seçiliyor: kayıtlı tercih, yoksa sistem
+ * ayarı. React yüklenene kadar beklenseydi gündüz tercihli ziyaretçi bir
+ * an koyu sayfa görürdü. Anahtar ThemeToggle.tsx'teki THEME_KEY ile aynı.
+ */
+const themeScript = `(function(){try{var t=localStorage.getItem("divonia-theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}var r=document.documentElement;r.dataset.theme=t;r.style.colorScheme=t}catch(e){}})();`;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -101,6 +111,9 @@ export default async function LocaleLayout({
       className={`${bricolage.variable} ${geist.variable} ${pixelify.variable} h-full`}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

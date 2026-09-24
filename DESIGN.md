@@ -23,14 +23,19 @@ DURAKLATILDI, DEVAM?).
 | `--panel` | `#1A1724` | Yükseltilmiş yüzey |
 | `--ink` | `#F1ECF4` | Ana metin (16.9:1) |
 | `--muted` | `#A9A2B8` | İkincil metin (8.0:1) |
+| `--faint` | `#8F88A3` | Küçük etiketler (5.8:1) |
 | `--accent` | `#EC1F27` | Logo kırmızısı; büyük öğeler, dekor |
 | `--accent-text` | `#FF4B53` | Koyu zeminde kırmızı metin (6.0:1) |
 | `--accent-fill` | `#D8141D` | Buton zemini, üstünde beyaz metin (5.2:1) |
 | `--paper` | `#EFE8DA` | Yalnızca oyunun diyalog kutusu |
 | `--paper-ink` | `#2A2530` | Diyalog kutusundaki metin (12.3:1) |
 
-Tek tema: koyu. Oyunun gece sahnesi ve logo kırmızısı koyu zeminde
-okunuyor; açık tema markayı çocuk uygulaması gibi gösteriyordu.
+İki tema: **gece** (varsayılan) ve **gündüz**. İlk açılışta sistem ayarı
+izlenir, üst menüdeki butonla değiştirilir, tercih tarayıcıda saklanır.
+Gündüz tokenları `globals.css` içinde `[data-theme="light"]` bloğunda;
+yukarıdaki tablo gece değerleri. Gündüz modunda voksel kalp logonun orijinal
+renkleriyle çizilir (siyah çerçeve, kırmızı gövde). Temaya göre değişen
+görseller `.only-dark` / `.only-light` sınıflarıyla seçilir.
 
 Tek vurgu rengi kırmızıdır. Oyun görselleri kendi renklerini getirir;
 arayüz yeni renk eklemez.
@@ -39,8 +44,10 @@ arayüz yeni renk eklemez.
 
 - **Başlık:** Bricolage Grotesque, 700-800, sıkı aralık.
 - **Metin:** Geist, 400-500, satır en fazla 65 karakter.
-- **Piksel:** Pixelify Sans. Yalnızca HUD, etiket, buton, sayaç. Uzun
-  metinde kullanılmaz.
+- **Piksel:** Pixelify Sans. Yalnızca büyük ve dekoratif yerlerde: DEVAM?,
+  sayaç, HUD'daki büyük rakamlar, oyunun arayüz parçaları (diyalog sekmesi,
+  monsterCELL). Buton, etiket ve menüde kullanılmaz; küçük boyutta
+  okunmuyor. Oyun hissini oralarda çentikli köşe ve sert gölge taşıyor.
 
 Üçü de Türkçe karakterleri (ğ ş ı İ) içerir.
 

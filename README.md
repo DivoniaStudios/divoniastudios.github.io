@@ -58,15 +58,17 @@ olmak zorunda; `en.ts` eksik alan bırakırsa derleme hata verir.
 **Date For Dead karakteri eklemek** → aynı dosyada `characters`. Görsel
 600×800, `public/games/date-for-dead/char-<id>.webp`.
 
-**Renk / font** → `src/app/globals.css` başındaki `:root` ve `DESIGN.md`.
+**Renk / font** → `src/app/globals.css` başındaki `:root` (gece) ve
+`[data-theme="light"]` (gündüz) blokları; kurallar `DESIGN.md`.
 
 ## Voksel kalp
 
 `VoxelHeart.tsx` logodaki kalbi 20×16'lık bir ızgaradan (`HEART` dizisi,
 `#` kırmızı gövde, `o` açık çerçeve) üç boyutlu vokseller olarak çizer.
-Tuval bilinçli olarak düşük çözünürlükte çizilip CSS ile keskin büyütülür;
-seviye ilerledikçe çözünürlük ve renk sayısı artar (`LEVELS`). WebGL yoksa
-CSS degradesi görünür, hareket azaltmada tek kare çizilir.
+Tuval cihaz çözünürlüğüne yakın çizilir (piksel bütçesiyle sınırlı);
+seviye ilerledikçe hafifçe keskinleşir (`LEVELS`). Renkler CSS
+tokenlarından okunur, tema değişince sahne de değişir. WebGL yoksa CSS
+degradesi görünür, hareket azaltmada tek kare çizilir.
 
 ## Kısıtlar
 
