@@ -567,6 +567,22 @@
     padding-block: 7rem 4rem;
   }
 
+  /*
+   * Kaydırmalı hikâye kapalıyken paneller alt alta akıyor ve kap uzuyor.
+   * Tuval kabı takip etseydi kalp bütün listenin ortasına, metinlerin
+   * arkasına çizilirdi (iPhone'da "Hareketi Azalt" açıkken görüldü).
+   * Tuval ve perde yalnızca ilk ekranı kaplıyor; sonraki paneller düz
+   * zeminde.
+   */
+  .story-canvas,
+  .story-veil {
+    height: 100svh;
+    bottom: auto;
+  }
+
+  /* Normal moddaki alt dolgu (HUD için) burada boşluk bırakıyordu */
+  .story .sticky > .relative { padding-bottom: 0; }
+
   .story-panels { display: block !important; }
 
   .story-panel {
@@ -579,6 +595,11 @@
   }
 
   .story-hud { display: none; }
+}
+
+/* Dar ekranda kalp ilk ekranın üst kısmında: metin onun altından başlıyor */
+@media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+  .story .sticky { padding-top: 46svh; }
 }
 
 /* ---------------------------------------------------------------
