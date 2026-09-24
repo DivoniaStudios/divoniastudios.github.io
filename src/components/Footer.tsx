@@ -33,12 +33,12 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </div>
 
           <nav aria-label={dict.nav.mainNav}>
-            <ul className="space-y-3">
+            <ul className="space-y-0.5">
               {keys.map((key) => (
                 <li key={key}>
                   <Link
                     href={pathFor(locale, key)}
-                    className="text-muted hover:text-ink text-sm transition-colors"
+                    className="text-muted hover:text-ink inline-flex min-h-11 items-center text-sm transition-colors"
                   >
                     {dict.nav[key]}
                   </Link>
@@ -48,7 +48,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </nav>
 
           <div>
-            <a href={`mailto:${dict.footer.email}`} className="link-px text-sm">
+            <a href={`mailto:${dict.footer.email}`} className="link-px inline-flex min-h-11 items-center text-sm">
               {dict.footer.email}
             </a>
             <p className="hud text-faint mt-6">{dict.footer.follow}</p>

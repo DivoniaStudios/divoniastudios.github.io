@@ -71,7 +71,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
                 defaultChecked={index === 0}
                 className="peer sr-only"
               />
-              <span className="px-notch bg-panel text-muted peer-checked:bg-accent-fill peer-focus-visible:outline-accent-text hud inline-block px-4 py-3 !text-[0.85rem] !normal-case !tracking-normal shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors peer-checked:text-white peer-checked:shadow-none peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 hover:text-ink">
+              <span className="px-notch bg-panel text-muted peer-checked:bg-accent-fill peer-focus-visible:outline-accent-text hud inline-flex min-h-11 items-center px-4 !text-[0.85rem] !normal-case !tracking-normal shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors peer-checked:text-white peer-checked:shadow-none peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 hover:text-ink">
                 {subject}
               </span>
             </label>

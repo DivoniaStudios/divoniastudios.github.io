@@ -31,7 +31,7 @@ export function ContinueScreen({ locale, dict }: { locale: Locale; dict: Diction
           <PixelButton href={pathFor(locale, "contact")}>{dict.common.startProject}</PixelButton>
           <p className="text-faint text-sm">
             {t.or}{" "}
-            <a href={`mailto:${dict.footer.email}`} className="link-px">
+            <a href={`mailto:${dict.footer.email}`} className="link-px inline-block py-3">
               {dict.footer.email}
             </a>
           </p>

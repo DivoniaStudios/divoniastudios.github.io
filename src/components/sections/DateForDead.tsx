@@ -63,7 +63,7 @@ export function DateForDead({ locale, dict }: { locale: Locale; dict: Dictionary
             </a>
             <Link
               href={gamePath(locale, "date-for-dead")}
-              className="group hud text-ink inline-flex items-center gap-2 !text-sm"
+              className="group hud text-ink inline-flex min-h-11 items-center gap-2 !text-sm"
             >
               <span className="border-accent border-b-2 pb-1">{t.more}</span>
               <ArrowRight size={16} weight="bold" aria-hidden className="transition-transform group-hover:translate-x-1" />

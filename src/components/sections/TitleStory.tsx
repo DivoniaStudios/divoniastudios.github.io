@@ -207,7 +207,7 @@ export function TitleStory({ locale, dict }: { locale: Locale; dict: Dictionary 
                 </p>
                 <Link
                   href={panelLinks[index]}
-                  className="group hud text-ink mt-8 inline-flex items-center gap-2 !text-sm"
+                  className="group hud text-ink mt-6 inline-flex min-h-11 items-center gap-2 !text-sm"
                 >
                   <span className="border-accent border-b-2 pb-1">{panel.link}</span>
                   <ArrowRight

@@ -12,8 +12,8 @@ import { useEffect, useRef, type RefObject } from "react";
  *  2. Kalp dönüp derinliğini gösteriyor.
  *  3. Bloklar birbirinden ayrılıyor: yapı taşları.
  *  4. Kalp yeniden birleşiyor; çözünürlük ve renk derinliği en yüksekte.
- * Çözünürlük ve renk derinliği seviyeyle birlikte kademeli artıyor:
- * "8-bit'ten HD'ye" anlatısının görsel karşılığı.
+ * Seviyeyle birlikte görüntü hafifçe keskinleşiyor, zemindeki renk
+ * derinliği artıyor; kalbin kendisi her seviyede net.
  *
  * Kalbin şekli logonun kendisinden örneklendi (public/brand/mark.png,
  * 20×16 ızgara): "#" kırmızı gövde, "o" açık renkli çerçeve.
@@ -44,13 +44,24 @@ const HEART = [
 const GRID_W = HEART[0].length;
 const GRID_H = HEART.length;
 
-/** Seviye başına piksel boyutu (CSS pikseli) ve renk kademesi */
+/**
+ * Seviye başına piksel boyutu (cihaz pikseli) ve zemindeki renk kademesi.
+ *
+ * Kalbin kendisi zaten piksel sanatı: her voksel bir piksel. Önceden tuval
+ * ekranın 1/7'si ile 1/1,6'sı arasında çiziliyordu ve Retina ekranda en net
+ * seviye bile bulanık kalıyordu. Artık cihaz çözünürlüğüne yakın çiziliyor;
+ * seviye atlama yalnızca hafif bir keskinleşme olarak hissediliyor.
+ */
 const LEVELS = [
-  { pixel: 7, colors: 12 },
-  { pixel: 5, colors: 18 },
-  { pixel: 3.2, colors: 30 },
-  { pixel: 1.6, colors: 80 },
+  { pixel: 2, colors: 24 },
+  { pixel: 1.5, colors: 36 },
+  { pixel: 1.25, colors: 64 },
+  { pixel: 1, colors: 128 },
 ];
+
+/** Tuvalin en fazla piksel sayısı: ızgara yürütme piksel başına pahalı */
+const MAX_PIXELS_DESKTOP = 2_600_000;
+const MAX_PIXELS_MOBILE = 900_000;
 
 const VERT = `
 attribute vec2 aPos;
@@ -154,8 +165,9 @@ void main() {
   float halo = exp(-dot(suv, suv) * 4.2);
   col += RED * halo * 0.16;
 
-  // Piksel yıldızlar
-  vec2 cell2 = floor(gl_FragCoord.xy);
+  // Piksel yıldızlar: çözünürlükten bağımsız, ekran yüksekliğine göre
+  // sabit bir ızgarada (~200 satır); her yıldız birkaç piksellik bir blok.
+  vec2 cell2 = floor(gl_FragCoord.xy / (uRes.y / 200.0));
   float star = step(0.9965, hash2(cell2));
   float tw = 0.5 + 0.5 * sin(uTime * 2.0 + hash2(cell2 + 3.1) * 40.0);
   col += vec3(0.75, 0.72, 0.85) * star * tw * (1.0 - halo) * 0.8;
@@ -247,9 +259,12 @@ void main() {
   // Kenar kararması
   col *= 1.0 - 0.28 * dot(uv * vec2(0.8, 1.0), uv * vec2(0.8, 1.0));
 
-  // Renk derinliği: seviyeye göre kademeli, Bayer titremesiyle
-  float d = bayer4(gl_FragCoord.xy) - 0.5;
-  col = floor(col * uColors + d + 0.5) / uColors;
+  // Renk derinliği: yalnızca zeminde, Bayer titremesiyle (retro doku).
+  // Kalbin yüzleri titremesiz: düz, net renk bloklar.
+  if (!hit) {
+    float d = bayer4(gl_FragCoord.xy) - 0.5;
+    col = floor(col * uColors + d + 0.5) / uColors;
+  }
 
   gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }
@@ -356,17 +371,22 @@ export function VoxelHeart({
     let level = -1;
 
     /*
-     * Tuval ekran çözünürlüğünde değil, seviyenin piksel boyutunda çiziliyor;
-     * CSS (image-rendering: pixelated) keskin biçimde büyütüyor. Kaba
-     * seviyeler bu yüzden hem daha "8-bit" hem de çok daha ucuz.
+     * Tuval cihaz çözünürlüğüne yakın çiziliyor; piksel bütçesini aşarsa
+     * orantılı küçültülüp CSS (image-rendering: pixelated) ile keskin
+     * büyütülüyor.
      */
     const resize = (nextLevel: number) => {
       const rect = canvas.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
-      // Dar ekranda kalp küçük; aynı piksel boyutu orada fazla kaba kalıyor
-      const pixel = LEVELS[nextLevel].pixel * (rect.width < 768 ? 0.6 : 1);
-      const w = Math.max(1, Math.round(rect.width / pixel));
-      const h = Math.max(1, Math.round(rect.height / pixel));
+      // Cihaz çözünürlüğü (en fazla 2x), seviyenin piksel boyutu ve piksel
+      // bütçesiyle sınırlanıyor.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let scale = dpr / LEVELS[nextLevel].pixel;
+      const budget = rect.width < 768 ? MAX_PIXELS_MOBILE : MAX_PIXELS_DESKTOP;
+      const raw = rect.width * rect.height * scale * scale;
+      if (raw > budget) scale *= Math.sqrt(budget / raw);
+      const w = Math.max(1, Math.round(rect.width * scale));
+      const h = Math.max(1, Math.round(rect.height * scale));
       if (w === width && h === height && nextLevel === level) return;
       width = w;
       height = h;

@@ -72,7 +72,7 @@ export function Header({
         <Link
           href={pathFor(locale)}
           aria-label={nav.home}
-          className="transition-opacity hover:opacity-85"
+          className="flex min-h-11 items-center transition-opacity hover:opacity-85"
           onClick={() => setOpen(false)}
         >
           <Logo height={32} />
@@ -208,7 +208,7 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
              */
             prefetch={false}
             aria-current={candidate === locale ? "true" : undefined}
-            className={`hud px-2 py-3 !text-[0.8rem] transition-colors ${
+            className={`hud flex min-h-11 min-w-10 items-center justify-center px-2 !text-[0.8rem] transition-colors ${
               candidate === locale ? "text-ink" : "text-faint hover:text-muted"
             }`}
           >

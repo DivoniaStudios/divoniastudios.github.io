@@ -19,21 +19,21 @@ export function ContactContent({ dict }: { dict: Dictionary }) {
           <h2 className="hud text-faint">{t.direct}</h2>
           <a
             href={`mailto:${dict.footer.email}`}
-            className="link-px mt-4 inline-flex items-center gap-2 text-lg break-all"
+            className="link-px mt-3 inline-flex min-h-11 items-center gap-2 text-lg break-all"
           >
             <EnvelopeSimple size={20} weight="fill" aria-hidden className="text-accent-text shrink-0" />
             {dict.footer.email}
           </a>
 
           <h2 className="hud text-faint mt-12">{t.social}</h2>
-          <ul className="mt-4 space-y-3">
+          <ul className="mt-3">
             {socials.map(({ name, href, Icon }) => (
               <li key={name}>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group text-muted hover:text-ink inline-flex items-center gap-3 transition-colors"
+                  className="group text-muted hover:text-ink inline-flex min-h-11 items-center gap-3 transition-colors"
                 >
                   <Icon size={22} weight="fill" aria-hidden className="text-ink" />
                   {name}

@@ -149,7 +149,7 @@ function SkillNode({
           {game && href && (
             <Link
               href={href}
-              className="group hud text-ink mt-4 inline-flex items-center gap-1.5 !text-[0.8rem]"
+              className="group hud text-ink mt-2 inline-flex min-h-11 items-center gap-1.5 !text-[0.8rem]"
             >
               <span className="text-faint">{dict.skills.proof}:</span>
               <span className="border-accent border-b-2 pb-0.5">{game.title}</span>
