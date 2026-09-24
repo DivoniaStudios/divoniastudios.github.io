@@ -53,7 +53,7 @@ export function QuestLog({ locale, dict }: { locale: Locale; dict: Dictionary })
               className="px-notch px-box spotlight flex flex-col lg:col-span-5"
               data-spotlight
             >
-              <PhoneFan className="aspect-[16/10] lg:aspect-auto lg:flex-1" />
+              <PhoneFan className="aspect-[16/10] lg:aspect-auto lg:min-h-[22rem] lg:flex-1" />
               <QuestBody game={photosensia} locale={locale} dict={dict} />
             </article>
           )}
